@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/view/screens/ExploreScreen.dart';
+import 'package:weather_app/view/screens/SearchScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,19 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child:
-                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Container(
-                alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      "London",
-                    ),
-                    Text("LondonEye"),
-                  ],
-                ),
-              ),
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Icon(Icons.cloud_outlined, size: 150),
               Text("Cloudy", style: TextStyle(fontSize: 30)),
               SizedBox(height: 30),
@@ -76,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ExploreScreen()));
+                                    builder: (context) => SearchScreen()));
                           },
                         )
                       ],
