@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:weather_app/view/screens/SearchScreen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:weather_app/view/screens/SettingScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
