@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/view/screens/SearchScreen.dart';
+import 'package:weather_app/view/screens/SettingScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
