@@ -14,11 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          fontFamily: 'nrt',
-          textTheme: Theme.of(context)
-              .textTheme
-              .apply(bodyColor: Colors.white, displayColor: Colors.white)),
-      home: const SearchScreen(),
+        fontFamily: 'nrt',
+      ),
+      home: const HomeScreen(),
     );
   }
 }

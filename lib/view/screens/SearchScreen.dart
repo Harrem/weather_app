@@ -64,8 +64,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           prefixIcon: InkWell(
                             child: Icon(Icons.search),
                             onTap: () async {
-                              final response = await apiServices
-                                  .getJsons(cityController.text);
+                              final response = await apiServices.getJsons();
                               setState(() {
                                 post = response;
                                 _history.insert(
