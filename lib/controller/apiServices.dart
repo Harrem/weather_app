@@ -4,17 +4,18 @@ import 'package:http/http.dart';
 import 'package:weather_app/model/currentWeather.dart';
 
 class ApiServices {
-  Future<Post> getJsons(String cityName) async {
-    String apiKey = "902833916c454c328aa105039221706";
+  String cityName = "Sulaymaniyah";
+  String apiKey = "902833916c454c328aa105039221706";
+
+  Future<Post> getJsons() async {
     final url =
         "http://api.weatherapi.com/v1/current.json?key=$apiKey&q=$cityName&aqi=no";
-
-    final response = await get(Uri.parse(url));
+    Response response = await get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       return Post.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception();
+      throw Exception('failed');
     }
   }
 }
