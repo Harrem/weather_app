@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:http/http.dart';
 import 'package:weather_app/model/currentWeather.dart';
 
 class ApiServices {
-  String cityName = "Sayyid Sadiq";
+  String cityName = "Sulaymaniyah";
   String apiKey = "902833916c454c328aa105039221706";
 
   Future<Post> getJsons() async {
