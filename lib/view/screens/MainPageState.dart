@@ -17,44 +17,47 @@ class _PageStateState extends State<PageState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          pageScreens[_selectedIndex],
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(40)),
-              child: GNav(
-                  tabBorderRadius: 200,
-                  tabBackgroundColor: Colors.amber,
-                  backgroundColor: Colors.transparent,
-                  tabs: [
-                    GButton(
-                      icon: Icons.home,
-                      text: 'Home',
-                    ),
-                    GButton(
-                      icon: Icons.search,
-                      text: 'Search',
-                    ),
-                    GButton(
-                      icon: Icons.settings,
-                      text: 'Setting',
-                    ),
-                  ],
-                  selectedIndex: _selectedIndex,
-                  onTabChange: (index) {
-                    setState(() {
-                      _selectedIndex = index;
-                    });
-                  }),
-            ),
+        body: Stack(
+      children: [
+        Container(
+          child: pageScreens[_selectedIndex],
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            margin: EdgeInsets.only(bottom: 20),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+            width: 300,
+            child: GNav(
+                tabActiveBorder: Border.all(),
+                padding: EdgeInsets.all(10),
+                duration: Duration(milliseconds: 300),
+                tabBorderRadius: 30,
+                backgroundColor: Colors.transparent,
+                tabs: [
+                  GButton(
+                    icon: Icons.home,
+                    text: 'سەرەکی',
+                  ),
+                  GButton(
+                    icon: Icons.search,
+                    text: 'گەڕان',
+                  ),
+                  GButton(
+                    icon: Icons.settings,
+                    text: 'ڕێکخستنەکان',
+                  ),
+                ],
+                selectedIndex: _selectedIndex,
+                onTabChange: (index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                }),
           ),
-        ],
-      ),
-    );
+        ),
+      ],
+    ));
   }
 }
