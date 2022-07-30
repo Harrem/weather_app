@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/view/screens/HomeScreen.dart';
 import 'package:weather_app/view/screens/MainPageState.dart';
-import 'package:weather_app/view/screens/SearchScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'nrt',
       ),
-      home: PageState(),
+      home: const PageState(),
     );
   }
 }

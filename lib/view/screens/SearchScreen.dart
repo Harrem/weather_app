@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:weather_app/Variables.dart';
 import 'package:weather_app/controller/apiServices.dart';
 import 'package:weather_app/model/currentWeather.dart';
 import 'package:weather_app/view/Widgets/InfWidget.dart';
+import 'package:weather_app/view/screens/SettingScreen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -13,10 +17,10 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   ApiServices apiServices = ApiServices();
   TextEditingController cityController = TextEditingController();
-  List _history = <Widget>[];
+  final List _history = <Widget>[];
 
   Post? post;
-  @override
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -71,7 +75,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                 _history.insert(
                                     0,
                                     InfWidget(
-                                      temperature: '${post?.current.tempC}°',
+                                      temperature:
+                                          Vars.istempratureTypeC == true
+                                              ? '${post?.current.tempC} C°'
+                                              : '${post?.current.tempF} F°',
                                       locationName: '${post?.location.name}',
                                       localTime: '${post?.location.localtime}',
                                       image: '${post?.current.condition.icon}',
@@ -90,12 +97,19 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
                 if (post != null)
-                  Expanded(
-                      child: ListView.builder(
-                          itemCount: _history.length,
-                          itemBuilder: (context, index) {
-                            return _history[index];
-                          })),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: 35.0,
+                      maxHeight: size.height * 0.63,
+                    ),
+                    child: Expanded(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: _history.length,
+                            itemBuilder: (context, index) {
+                              return _history[index];
+                            })),
+                  ),
               ],
             ),
           ),
