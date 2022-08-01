@@ -13,7 +13,11 @@ class PageState extends StatefulWidget {
 
 class _PageStateState extends State<PageState> {
   int _selectedIndex = 0;
-  List pageScreens = [HomeScreen(), SearchScreen(), SettingScreen()];
+  List pageScreens = [
+    const HomeScreen(),
+    const SearchScreen(),
+    const SettingScreen()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,17 +29,19 @@ class _PageStateState extends State<PageState> {
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-            margin: EdgeInsets.only(bottom: 20),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            margin: const EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20), color: Colors.white),
             width: 300,
             child: GNav(
-                tabActiveBorder: Border.all(),
-                padding: EdgeInsets.all(10),
-                duration: Duration(milliseconds: 300),
-                tabBorderRadius: 30,
+                tabBackgroundColor: Color.fromARGB(255, 197, 131, 238),
+                activeColor: Colors.white,
+                padding: const EdgeInsets.all(12),
+                duration: const Duration(milliseconds: 200),
+                tabBorderRadius: 15,
                 backgroundColor: Colors.transparent,
-                tabs: [
+                tabs: const [
                   GButton(
                     icon: Icons.home,
                     text: 'سەرەکی',
