@@ -51,7 +51,7 @@ class Current {
     required this.gustKph,
   });
 
-  int lastUpdatedEpoch;
+  dynamic lastUpdatedEpoch;
   String lastUpdated;
   double tempC;
   double tempF;
@@ -77,7 +77,7 @@ class Current {
 
   factory Current.fromJson(Map<String, dynamic> json) => Current(
         lastUpdatedEpoch: json["last_updated_epoch"],
-        lastUpdated: json["last_updated"],
+        lastUpdated: json["last_updated"].toString(),
         tempC: json["temp_c"].toDouble(),
         tempF: json["temp_f"].toDouble(),
         isDay: json["is_day"],
