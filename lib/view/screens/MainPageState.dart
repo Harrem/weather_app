@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:weather_app/view/screens/HomeScreen.dart';
 import 'package:weather_app/view/screens/SearchScreen.dart';
 import 'package:weather_app/view/screens/SettingScreen.dart';
+import 'package:flutter/cupertino.dart';
 
 class PageState extends StatefulWidget {
   const PageState({Key? key}) : super(key: key);
@@ -35,23 +36,27 @@ class _PageStateState extends State<PageState> {
                 borderRadius: BorderRadius.circular(20), color: Colors.white),
             width: 300,
             child: GNav(
-                tabBackgroundColor: Color.fromARGB(255, 197, 131, 238),
-                activeColor: Colors.white,
+                tabBackgroundColor: Color.fromARGB(255, 240, 216, 255),
+                activeColor: Colors.deepPurple[400],
+                color: Colors.grey[700],
                 padding: const EdgeInsets.all(12),
                 duration: const Duration(milliseconds: 200),
                 tabBorderRadius: 15,
                 backgroundColor: Colors.transparent,
                 tabs: const [
                   GButton(
-                    icon: Icons.home,
+                    gap: 10,
+                    icon: CupertinoIcons.home,
                     text: 'سەرەکی',
                   ),
                   GButton(
-                    icon: Icons.search,
+                    gap: 10,
+                    icon: CupertinoIcons.search,
                     text: 'گەڕان',
                   ),
                   GButton(
-                    icon: Icons.settings,
+                    gap: 10,
+                    icon: CupertinoIcons.settings,
                     text: 'ڕێکخستنەکان',
                   ),
                 ],
