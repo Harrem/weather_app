@@ -12,16 +12,23 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Post? post;
+  String? hour;
   @override
   void initState() {
     // TODO: implement initState
     getData();
+    debugPrint(DateTime.now().hour.toString());
     super.initState();
   }
 
   void getData() async {
     post = await ApiServices().getCurrentWeather();
-    setState(() {});
+    setState(() {
+      DateTime.now().hour.toString() ==
+              post!.current.lastUpdated.split(":")[0].split(" ")[1]
+          ? "hello"
+          : "fds";
+    });
   }
 
   @override
@@ -29,13 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color.fromARGB(255, 255, 255, 255),
-                Colors.white,
+                Color.fromARGB(255, 235, 241, 255),
+                Color.fromARGB(255, 250, 250, 255),
               ],
             ),
           ),
@@ -47,71 +54,85 @@ class _HomeScreenState extends State<HomeScreen> {
             panel: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.deepPurple,
-                    Color.fromARGB(255, 136, 97, 204),
+                    Color.fromARGB(255, 98, 8, 234),
+                    Color.fromARGB(255, 98, 8, 234),
                   ],
                 ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 15),
-                  FractionallySizedBox(
+                  const SizedBox(height: 5),
+                  const FractionallySizedBox(
                     widthFactor: 0.90,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Today",
-                              style: TextStyle(color: Colors.grey[100])),
-                          const Icon(
-                            Icons.link_rounded,
-                            color: Colors.white,
-                          ),
-                          Text("Today"),
-                        ],
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Icon(
+                        Icons.linear_scale_sharp,
+                        color: Color.fromARGB(255, 107, 38, 240),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                  const SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          "Today",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Text(
+                          "Next 7 Days",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
+                  const SizedBox(height: 5),
                   SizedBox(
-                    height: 130,
+                    height: 120,
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: 20,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: ((context, index) => Padding(
-                            padding: const EdgeInsets.all(5.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: SizedBox(
-                              height: 150,
-                              width: 70,
+                              height: 10,
+                              width: 80,
                               child: Card(
+                                color: const Color.fromARGB(255, 107, 38, 240),
+                                elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   side: BorderSide.none,
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Icon(Icons.cloud_outlined, size: 35),
-                                    SizedBox(height: 5),
+                                  children: [
+                                    const Icon(
+                                      Icons.cloud,
+                                      size: 35,
+                                      color: Colors.white,
+                                    ),
+                                    const SizedBox(height: 5),
                                     Text(
-                                      "11:00",
-                                      style: TextStyle(
+                                      hour ?? "nothig",
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey,
                                       ),
                                     ),
                                     Text(
                                       "30",
-                                      style: TextStyle(fontSize: 18),
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
                                     )
                                   ],
                                 ),
@@ -122,17 +143,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Divider(),
                   FractionallySizedBox(
-                      widthFactor: 0.7,
+                      widthFactor: 0.9,
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: 10,
                         itemBuilder: ((context, index) => SizedBox(
-                              child: Card(
-                                  child: Row(
-                                children: [
-                                  Icon(Icons.cloud_outlined),
-                                ],
-                              )),
+                              child: SizedBox(
+                                // height: 50,
+                                child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    color:
+                                        const Color.fromARGB(255, 107, 38, 240),
+                                    child: Row(
+                                      children: const [
+                                        Padding(
+                                          padding: EdgeInsets.all(15.0),
+                                          child: Icon(
+                                            Icons.cloud,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Mondy",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ],
+                                    )),
+                              ),
                             )),
                       ))
                 ],
@@ -169,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: ((context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
+                                  return const CircularProgressIndicator();
                                 }
                                 if (snapshot.data == null) {
                                   return const Text(
@@ -182,20 +221,50 @@ class _HomeScreenState extends State<HomeScreen> {
                                       decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(100),
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
-                                              blurRadius: 60,
-                                              color:
-                                                  Color.fromARGB(20, 0, 0, 0)),
+                                            blurRadius: 60,
+                                            color: Color.fromARGB(20, 0, 0, 0),
+                                          ),
                                         ],
                                       ),
-                                      child: Image.asset(
-                                        "assets/sun_sunrise.png",
+                                      child: Image.network(
+                                        "http:${post!.current.condition.icon}",
                                         width: 200,
                                       ),
                                     ),
-                                    Text(snapshot.data!.current.condition.text,
-                                        style: const TextStyle(fontSize: 30)),
+                                    GradientText(post!.current.condition.text,
+                                        gradient: const LinearGradient(
+                                          // tileMode: TileMode.clamp,
+                                          colors: <Color>[
+                                            Color.fromARGB(255, 160, 170, 204),
+                                            Color.fromARGB(255, 232, 234, 247),
+                                            //add more color here.
+                                          ],
+                                        )),
+                                    Text(
+                                      post!.current.condition.text,
+                                      style: TextStyle(
+                                        fontSize: 50,
+                                        fontWeight: FontWeight.bold,
+                                        foreground: Paint()
+                                          ..shader = const LinearGradient(
+                                            // tileMode: TileMode.clamp,
+                                            colors: <Color>[
+                                              Color.fromARGB(
+                                                  255, 160, 170, 204),
+                                              Color.fromARGB(
+                                                  255, 232, 234, 247),
+                                              //add more color here.
+                                            ],
+                                          ).createShader(
+                                            Rect.fromCenter(
+                                                center: Offset(10, 10),
+                                                width: 10,
+                                                height: 100),
+                                          ),
+                                      ),
+                                    ),
                                   ],
                                 );
                               })),
@@ -269,6 +338,29 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class GradientText extends StatelessWidget {
+  const GradientText(
+    this.text, {
+    required this.gradient,
+    this.style,
+  });
+
+  final String text;
+  final TextStyle? style;
+  final Gradient gradient;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      blendMode: BlendMode.srcIn,
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+      ),
+      child: Text(text, style: style),
     );
   }
 }

@@ -21,16 +21,15 @@ class ApiServices {
   }
 
   Future<Post> getCurrentWeather() async {
-    Post? current;
+    Post? forecast;
     final url =
-        "http://api.weatherapi.com/v1/current.json?key=$apiKey&q=sulaymaniyah&aqi=no";
+        "http://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=London&days=7&aqi=yes&alerts=no";
 
     final res = await get(Uri.parse(url)).catchError((e) {
       debugPrint("an error occured: $e");
     });
-    debugPrint(res.body);
 
-    current = Post.fromJson(json.decode(res.body));
-    return current;
+    forecast = Post.fromJson(json.decode(res.body));
+    return forecast;
   }
 }
