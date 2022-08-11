@@ -5,7 +5,6 @@ import 'package:weather_app/Variables.dart';
 import 'package:weather_app/controller/apiServices.dart';
 import 'package:weather_app/model/currentWeather.dart';
 import 'package:weather_app/view/Widgets/InfWidget.dart';
-import 'package:weather_app/view/screens/SettingScreen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -17,9 +16,6 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   ApiServices apiServices = ApiServices();
   TextEditingController cityController = TextEditingController();
-  final List _history = <Widget>[];
-
-  Post? post;
 
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -71,17 +67,20 @@ class _SearchScreenState extends State<SearchScreen> {
                               final response = await apiServices
                                   .getJsons(cityController.text);
                               setState(() {
-                                post = response;
-                                _history.insert(
+                                Vars.post = response;
+                                Vars.history.insert(
                                     0,
                                     InfWidget(
-                                      temperature:
-                                          Vars.istempratureTypeC == true
-                                              ? '${post?.current.tempC} C°'
-                                              : '${post?.current.tempF} F°',
-                                      locationName: '${post?.location.name}',
-                                      localTime: '${post?.location.localtime}',
-                                      image: '${post?.current.condition.icon}',
+                                      temperature: Vars.istempratureTypeC ==
+                                              true
+                                          ? '${Vars.post?.current.tempC} C°'
+                                          : '${Vars.post?.current.tempF} F°',
+                                      locationName:
+                                          '${Vars.post?.location.name}',
+                                      localTime:
+                                          '${Vars.post?.location.localtime}',
+                                      image:
+                                          '${Vars.post?.current.condition.icon}',
                                     ));
                               });
                             },
@@ -96,19 +95,18 @@ class _SearchScreenState extends State<SearchScreen> {
                     style: TextStyle(fontFamily: 'nrt'),
                   ),
                 ),
-                if (post != null)
+                if (Vars.post != null)
                   ConstrainedBox(
                     constraints: BoxConstraints(
                       minHeight: 35.0,
                       maxHeight: size.height * 0.63,
                     ),
-                    child: Expanded(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: _history.length,
-                            itemBuilder: (context, index) {
-                              return _history[index];
-                            })),
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: Vars.history.length,
+                        itemBuilder: (context, index) {
+                          return Vars.history[index];
+                        }),
                   ),
               ],
             ),

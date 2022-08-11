@@ -142,38 +142,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Divider(),
-                  FractionallySizedBox(
-                      widthFactor: 0.9,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: 10,
-                        itemBuilder: ((context, index) => SizedBox(
-                              child: SizedBox(
-                                // height: 50,
-                                child: Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    color:
-                                        const Color.fromARGB(255, 107, 38, 240),
-                                    child: Row(
-                                      children: const [
-                                        Padding(
-                                          padding: EdgeInsets.all(15.0),
-                                          child: Icon(
-                                            Icons.cloud,
-                                            color: Colors.white,
+                  Expanded(
+                    child: FractionallySizedBox(
+                        widthFactor: 0.9,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 10,
+                          itemBuilder: ((context, index) => SizedBox(
+                                child: SizedBox(
+                                  // height: 50,
+                                  child: Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      color: const Color.fromARGB(
+                                          255, 107, 38, 240),
+                                      child: Row(
+                                        children: const [
+                                          Padding(
+                                            padding: EdgeInsets.all(15.0),
+                                            child: Icon(
+                                              Icons.cloud,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          "Mondy",
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                            )),
-                      ))
+                                          Text(
+                                            "Mondy",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                              )),
+                        )),
+                  )
                 ],
               ),
             ),
