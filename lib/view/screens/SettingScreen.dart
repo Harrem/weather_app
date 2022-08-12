@@ -64,45 +64,6 @@ class _SettingScreenState extends State<SettingScreen> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Get my Location'),
-                TextButton(
-                    onPressed: () async {
-                      await GetLocation().determinePosition();
-
-                      List<Placemark> placemarks =
-                          await placemarkFromCoordinates(
-                              GetLocation.lat, GetLocation.lon);
-
-                      ApiServices apiServices = ApiServices();
-                      final response = await apiServices
-                          .getJsons('${placemarks[0].country}');
-                      setState(() {
-                        country = placemarks[0].country!;
-                      });
-
-                      Vars.post = response;
-                      Vars.history.insert(
-                          0,
-                          InfWidget(
-                            temperature: Vars.istempratureTypeC == true
-                                ? '${Vars.post?.current.tempC} C°'
-                                : '${Vars.post?.current.tempF} F°',
-                            locationName: '${Vars.post?.location.name}',
-                            localTime: '${Vars.post?.location.localtime}',
-                            image: '${Vars.post?.current.condition.icon}',
-                          ));
-                    },
-                    child: country == ''
-                        ? Icon(Icons.location_on_outlined)
-                        : Text(country)),
-              ],
-            ),
-          )
         ],
       ),
     );

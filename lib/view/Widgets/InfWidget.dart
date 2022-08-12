@@ -20,43 +20,19 @@ class InfWidget extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(14)),
-        height: 110,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(
-              height: 70,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25),
-                    child: Text(
-                      temperature,
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                  VerticalDivider(
-                    indent: 10,
-                    endIndent: 10,
-                    thickness: 0.3,
-                    color: Colors.white,
-                  ),
-                  Text('$locationName'),
-                ],
-              ),
+            Text('$locationName'),
+            Text(
+              temperature,
+              style: TextStyle(fontSize: 20),
             ),
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(left: 100, bottom: 10, right: 100),
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.9),
-                    borderRadius: BorderRadius.circular(14)),
-                child: Center(
-                  child: Text(
-                    '$localTime',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
+            Image.network(image),
+            Center(
+              child: Text(
+                '$localTime',
+                style: TextStyle(color: Colors.black),
               ),
             )
           ],
