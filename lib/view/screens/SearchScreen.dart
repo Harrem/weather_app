@@ -106,9 +106,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
                               ApiServices apiServices = ApiServices();
                               final response = await apiServices
-                                  .getJsons('${placemarks[0].country}');
+                                  .getJsons('${placemarks[0].locality}');
                               setState(() {
-                                country = placemarks[0].country!;
+                                country = placemarks[0].locality!;
                               });
                               print(Vars.history);
                               Vars.post = response;
