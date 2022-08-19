@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/theme/custom_theme.dart';
 import 'package:weather_app/view/screens/MainPageState.dart';
 
 void main() {
@@ -12,9 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'nrt',
-      ),
+      theme: CustomTheme.lightTheme,
       home: const PageState(),
     );
   }

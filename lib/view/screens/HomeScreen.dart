@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:weather_app/controller/apiServices.dart';
 import 'package:weather_app/model/currentWeather.dart';
+
+import '../../controller/DateTimeFormatter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -50,11 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
             minHeight: 263,
             maxHeight: 600,
             color: Colors.transparent,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+            boxShadow: const [],
             panel: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                gradient: const LinearGradient(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(45)),
+                gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
@@ -85,7 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: const [
                         Text(
                           "Today",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w100),
                         ),
                         Text(
                           "Next 7 Days",
@@ -142,38 +146,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Divider(),
-                  FractionallySizedBox(
-                      widthFactor: 0.9,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: 10,
-                        itemBuilder: ((context, index) => SizedBox(
-                              child: SizedBox(
-                                // height: 50,
-                                child: Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    color:
-                                        const Color.fromARGB(255, 107, 38, 240),
-                                    child: Row(
-                                      children: const [
-                                        Padding(
-                                          padding: EdgeInsets.all(15.0),
-                                          child: Icon(
-                                            Icons.cloud,
-                                            color: Colors.white,
+                  Expanded(
+                    child: FractionallySizedBox(
+                        widthFactor: 0.9,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 10,
+                          itemBuilder: ((context, index) => SizedBox(
+                                child: SizedBox(
+                                  // height: 50,
+                                  child: Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      color: const Color.fromARGB(
+                                          255, 107, 38, 240),
+                                      child: Row(
+                                        children: const [
+                                          Padding(
+                                            padding: EdgeInsets.all(15.0),
+                                            child: Icon(
+                                              Icons.cloud,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          "Mondy",
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                            )),
-                      ))
+                                          Text(
+                                            "Mondy",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                              )),
+                        )),
+                  )
                 ],
               ),
             ),
@@ -186,24 +193,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          const SizedBox(height: 10),
                           Container(
                             alignment: Alignment.topLeft,
-                            child: const Text(
-                              "Good",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w100),
+                            child: Text(
+                              "Today, ${DateTimeFormatter.formatDate(DateTime.now().toIso8601String())}",
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w100,
+                                  color: Colors.grey),
                             ),
                           ),
-                          Container(
-                            alignment: Alignment.topLeft,
-                            child: const Text(
-                              "Morning",
-                              style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          const SizedBox(height: 30),
-                          FutureBuilder<Post>(
+                          const SizedBox(height: 5),
+                          FutureBuilder<Post?>(
                               future: ApiServices().getCurrentWeather(),
                               builder: ((context, snapshot) {
                                 if (snapshot.connectionState ==
@@ -218,52 +220,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return Column(
                                   children: [
                                     Container(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        post!.location.name,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 40),
+                                    Container(
                                       decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(100),
                                         boxShadow: const [
                                           BoxShadow(
-                                            blurRadius: 60,
-                                            color: Color.fromARGB(20, 0, 0, 0),
+                                            blurRadius: 40,
+                                            spreadRadius: 40,
+                                            color:
+                                                Color.fromARGB(19, 88, 70, 101),
                                           ),
                                         ],
                                       ),
-                                      child: Image.network(
-                                        "http:${post!.current.condition.icon}",
-                                        width: 200,
+                                      child: SvgPicture.asset(
+                                        "assets/weather_icon_set/${post!.current.condition.text.trim().toLowerCase()}.svg",
+                                        width: 170,
                                       ),
                                     ),
-                                    GradientText(post!.current.condition.text,
-                                        gradient: const LinearGradient(
-                                          // tileMode: TileMode.clamp,
-                                          colors: <Color>[
-                                            Color.fromARGB(255, 160, 170, 204),
-                                            Color.fromARGB(255, 232, 234, 247),
-                                            //add more color here.
-                                          ],
-                                        )),
-                                    Text(
+                                    const SizedBox(height: 30),
+                                    GradientText(
                                       post!.current.condition.text,
-                                      style: TextStyle(
-                                        fontSize: 50,
-                                        fontWeight: FontWeight.bold,
-                                        foreground: Paint()
-                                          ..shader = const LinearGradient(
-                                            // tileMode: TileMode.clamp,
-                                            colors: <Color>[
-                                              Color.fromARGB(
-                                                  255, 160, 170, 204),
-                                              Color.fromARGB(
-                                                  255, 232, 234, 247),
-                                              //add more color here.
-                                            ],
-                                          ).createShader(
-                                            Rect.fromCenter(
-                                                center: Offset(10, 10),
-                                                width: 10,
-                                                height: 100),
-                                          ),
-                                      ),
+                                      style: const TextStyle(fontSize: 40),
+                                      gradient: const LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            Color.fromARGB(255, 155, 160, 200),
+                                            Color.fromARGB(255, 202, 209, 227),
+                                          ]),
                                     ),
                                   ],
                                 );
@@ -278,31 +272,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                     const Text(
                                       "Wind",
                                       style: TextStyle(
-                                          fontSize: 14, color: Colors.grey),
+                                          fontSize: 12, color: Colors.grey),
                                     ),
+                                    const SizedBox(height: 5),
                                     Text(
                                         post != null
-                                            ? post!.current.windKph.toString()
+                                            ? post!.current.windKph
+                                                .round()
+                                                .toString()
                                             : "N/A",
-                                        style: const TextStyle(fontSize: 18)),
+                                        style: const TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold)),
                                   ],
                                 ),
                                 const VerticalDivider(
                                   color: Colors.grey,
-                                  thickness: 1,
+                                  thickness: 0.5,
+                                  indent: 10,
                                 ),
                                 Column(
                                   children: [
                                     const Text(
                                       "Temp",
                                       style: TextStyle(
-                                          fontSize: 14, color: Colors.grey),
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
                                     ),
+                                    const SizedBox(height: 5),
                                     Text(
-                                        post != null
-                                            ? post!.current.tempC.toString()
-                                            : "N/A",
-                                        style: const TextStyle(fontSize: 18)),
+                                      post != null
+                                          ? "${post!.current.tempC.round()}°C"
+                                          : "N/A",
+                                      style: const TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 const VerticalDivider(
@@ -312,15 +319,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Column(
                                   children: [
                                     const Text(
-                                      "Humidity",
+                                      "Humidit",
                                       style: TextStyle(
-                                          fontSize: 14, color: Colors.grey),
+                                          fontSize: 12, color: Colors.grey),
                                     ),
+                                    const SizedBox(height: 5),
                                     Text(
-                                        post != null
-                                            ? post!.current.humidity.toString()
-                                            : "N/A",
-                                        style: const TextStyle(fontSize: 18)),
+                                      post != null
+                                          ? "${post!.current.humidity.round()}%"
+                                          : "N/A",
+                                      style: const TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],

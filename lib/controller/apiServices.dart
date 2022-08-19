@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -20,16 +21,21 @@ class ApiServices {
     }
   }
 
-  Future<Post> getCurrentWeather() async {
+  Future<Post?> getCurrentWeather() async {
     Post? forecast;
     final url =
         "http://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=London&days=7&aqi=yes&alerts=no";
 
-    final res = await get(Uri.parse(url)).catchError((e) {
-      debugPrint("an error occured: $e");
-    });
+    final Response res;
+    try {
+      res = await get(Uri.parse(url)).catchError((e) {
+        debugPrint("an error occured: $e");
+      });
+      forecast = Post.fromJson(json.decode(res.body));
+    } on SocketException catch (e) {
+      debugPrint(e.toString());
+    }
 
-    forecast = Post.fromJson(json.decode(res.body));
     return forecast;
   }
 }
