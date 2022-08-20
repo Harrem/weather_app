@@ -157,7 +157,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             ? '${Vars.post?.current.tempC} C°'
                             : '${Vars.post?.current.tempF} F°',
                         locationName: '${Vars.post?.location.name}',
-                        localTime: '${Vars.post?.location.localtime}',
+                        localTime:
+                            '${Vars.post?.location.localtime.split(' ')[1]}\n${Vars.post?.location.localtime.split(' ')[0]}',
                         image: 'http:${Vars.post?.current.condition.icon}',
                       )),
               ],
