@@ -34,8 +34,14 @@ dependencies:
   http: ^0.13.4
   google_nav_bar: ^5.0.6
   toggle_switch: ^2.0.1
+<<<<<<< HEAD
   flutter_svg: any
   google_fonts: ^3.0.1
+=======
+  geolocator: ^9.0.1
+  geocoding: ^2.0.4
+  location: ^4.4.0
+>>>>>>> 49335e27197d8d03a58e13405b3e5d2a77ce2cae
 
 dev_dependencies:
   flutter_test:

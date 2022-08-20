@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:weather_app/Variables.dart';
+import 'package:weather_app/controller/apiServices.dart';
+import 'package:weather_app/controller/getLocation.dart';
+import 'package:weather_app/view/Widgets/InfWidget.dart';
+import 'package:weather_app/view/screens/SearchScreen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -10,6 +16,13 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  String country = "";
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +33,7 @@ class _SettingScreenState extends State<SettingScreen> {
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
