@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:location/location.dart' as loc;
-import 'package:weather_app/Variables.dart';
-import 'package:weather_app/controller/apiServices.dart';
-import 'package:weather_app/controller/getLocation.dart';
-import 'package:weather_app/view/Widgets/InfWidget.dart';
+import 'package:weather_app/_variables.dart';
+import 'package:weather_app/controller/api_services.dart';
+import 'package:weather_app/controller/get_location.dart';
+import 'package:weather_app/view/Widgets/widget_search_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -21,12 +21,13 @@ class _SearchScreenState extends State<SearchScreen> {
   String letPermission = '';
   bool isOn = false;
 
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         height: double.maxFinite,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/bk.jpg'), fit: BoxFit.cover)),
         child: SafeArea(
@@ -46,16 +47,17 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 Center(
                   child: Container(
-                    padding: EdgeInsets.only(top: 16),
+                    padding: const EdgeInsets.only(top: 16),
                     width: size.width * 0.9,
                     height: 60,
                     child: TextField(
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                       controller: cityController,
                       textDirection: TextDirection.rtl,
                       cursorColor: Colors.grey,
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(top: 15, right: 10),
+                          contentPadding:
+                              const EdgeInsets.only(top: 15, right: 10),
                           fillColor: Colors.white,
                           filled: true,
                           border: OutlineInputBorder(
@@ -63,12 +65,12 @@ class _SearchScreenState extends State<SearchScreen> {
                               borderSide: BorderSide.none),
                           hintText: 'گەڕان بۆ شارەکان',
                           hintTextDirection: TextDirection.rtl,
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Colors.grey,
                               fontSize: 18,
                               fontFamily: 'nrt'),
                           prefixIcon: InkWell(
-                            child: Icon(Icons.search),
+                            child: const Icon(Icons.search),
                             onTap: () async {
                               final response = await apiServices
                                   .getJsons(cityController.text);
@@ -110,7 +112,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               setState(() {
                                 country = placemarks[0].locality!;
                               });
-                              print(Vars.history);
+
                               Vars.post = response;
                               Vars.history = InfWidget(
                                 temperature: Vars.istempratureTypeC == true
@@ -123,18 +125,18 @@ class _SearchScreenState extends State<SearchScreen> {
                             }
                           },
                           child: country == ''
-                              ? Icon(
+                              ? const Icon(
                                   Icons.location_on_outlined,
                                   color: Colors.black,
                                 )
                               : Text(
                                   country,
-                                  style: TextStyle(color: Colors.black),
+                                  style: const TextStyle(color: Colors.black),
                                 )),
                     ),
                     Container(
                       padding: const EdgeInsets.only(right: 20, top: 6),
-                      child: Text(
+                      child: const Text(
                         'شوێنم دیاریی بکەن',
                         style: TextStyle(fontFamily: 'nrt'),
                       ),
@@ -146,7 +148,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     padding: const EdgeInsets.only(right: 20, bottom: 20),
                     child: Text(
                       letPermission,
-                      style: TextStyle(color: Colors.red, fontSize: 11),
+                      style: const TextStyle(color: Colors.red, fontSize: 11),
                     ),
                   ),
                 if (Vars.post != null)

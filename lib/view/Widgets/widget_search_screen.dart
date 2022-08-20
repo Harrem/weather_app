@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class InfWidget extends StatelessWidget {
   InfWidget(
       {Key? key,
@@ -16,23 +17,23 @@ class InfWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(15),
+        margin: const EdgeInsets.all(15),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(14)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text('$locationName'),
+            Text(locationName),
             Text(
               temperature,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
             Image.network(image),
             Center(
               child: Text(
-                '$localTime',
-                style: TextStyle(
+                localTime,
+                style: const TextStyle(
                   color: Colors.black,
                 ),
                 textAlign: TextAlign.center,
@@ -40,7 +41,7 @@ class InfWidget extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {},
-              child: Text('زیادکردن'),
+              child: const Text('زیادکردن'),
             ),
           ],
         ));

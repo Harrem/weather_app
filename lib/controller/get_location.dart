@@ -1,6 +1,5 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:location/location.dart' as loc;
 
 class GetLocation {
   static double lat = 0;
@@ -31,10 +30,8 @@ class GetLocation {
 
     var position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    var lastPosition = await Geolocator.getLastKnownPosition();
+
     lat = position.latitude;
     lon = position.longitude;
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(GetLocation.lat, GetLocation.lon);
   }
 }

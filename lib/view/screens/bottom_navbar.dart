@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:weather_app/view/screens/HomeScreen.dart';
-import 'package:weather_app/view/screens/SearchScreen.dart';
-import 'package:weather_app/view/screens/SettingScreen.dart';
+import 'package:weather_app/view/screens/home_screen.dart';
+import 'package:weather_app/view/screens/search_screen.dart';
+import 'package:weather_app/view/screens/setting_screen.dart';
 import 'package:flutter/cupertino.dart';
 
 class PageState extends StatefulWidget {
@@ -38,7 +38,8 @@ class _PageStateState extends State<PageState> {
                     color: Colors.white),
                 width: 300,
                 child: GNav(
-                    tabBackgroundColor: Color.fromARGB(255, 240, 216, 255),
+                    tabBackgroundColor:
+                        const Color.fromARGB(255, 240, 216, 255),
                     activeColor: Colors.deepPurple[400],
                     color: Colors.grey[700],
                     padding: const EdgeInsets.all(12),

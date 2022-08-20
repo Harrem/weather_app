@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:weather_app/model/currentWeather.dart';
+import 'package:weather_app/model/current_weather.dart';
 
 class ApiServices {
   String apiKey = "902833916c454c328aa105039221706";
