@@ -32,9 +32,16 @@ class InfWidget extends StatelessWidget {
             Center(
               child: Text(
                 '$localTime',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
               ),
-            )
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('زیادکردن'),
+            ),
           ],
         ));
   }
