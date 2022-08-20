@@ -50,17 +50,17 @@ class _PageStateState extends State<PageState> {
                       GButton(
                         gap: 10,
                         icon: CupertinoIcons.home,
-                        text: 'سەرەکی',
+                        text: 'Home',
                       ),
                       GButton(
                         gap: 10,
                         icon: CupertinoIcons.search,
-                        text: 'گەڕان',
+                        text: 'Search',
                       ),
                       GButton(
                         gap: 10,
                         icon: CupertinoIcons.settings,
-                        text: 'ڕێکخستنەکان',
+                        text: 'Settings',
                       ),
                     ],
                     selectedIndex: _selectedIndex,

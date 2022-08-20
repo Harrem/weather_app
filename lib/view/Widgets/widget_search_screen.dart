@@ -41,7 +41,7 @@ class InfWidget extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {},
-              child: const Text('زیادکردن'),
+              child: const Text('add'),
             ),
           ],
         ));

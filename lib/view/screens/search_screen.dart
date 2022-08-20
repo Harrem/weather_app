@@ -53,7 +53,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: TextField(
                       style: const TextStyle(color: Colors.black),
                       controller: cityController,
-                      textDirection: TextDirection.rtl,
                       cursorColor: Colors.grey,
                       decoration: InputDecoration(
                           contentPadding:
@@ -63,12 +62,12 @@ class _SearchScreenState extends State<SearchScreen> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
                               borderSide: BorderSide.none),
-                          hintText: 'گەڕان بۆ شارەکان',
-                          hintTextDirection: TextDirection.rtl,
+                          hintText: 'Search for cities',
+                          //  hintTextDirection: TextDirection.rtl,
                           hintStyle: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 18,
-                              fontFamily: 'nrt'),
+                            color: Colors.grey,
+                            fontSize: 18,
+                          ),
                           prefixIcon: InkWell(
                             child: const Icon(Icons.search),
                             onTap: () async {
@@ -85,8 +84,14 @@ class _SearchScreenState extends State<SearchScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
+                    Container(
                       padding: const EdgeInsets.only(left: 20, top: 6),
+                      child: const Text(
+                        'Get my location',
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20, top: 6),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             primary: Colors.white,
@@ -133,13 +138,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                   country,
                                   style: const TextStyle(color: Colors.black),
                                 )),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(right: 20, top: 6),
-                      child: const Text(
-                        'شوێنم دیاریی بکەن',
-                        style: TextStyle(fontFamily: 'nrt'),
-                      ),
                     ),
                   ],
                 ),
