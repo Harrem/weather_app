@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:weather_app/controller/apiServices.dart';
 import 'package:weather_app/model/currentWeather.dart';
+import 'package:weather_app/model/weekend_weather.dart';
 
 import '../../controller/DateTimeFormatter.dart';
 
@@ -15,23 +18,28 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Post? post;
-  String? hour;
+  WeekendWeather? weekendWeather;
+  List<Forecastday>? forecastday;
+  int hour = DateTime.now().hour;
   @override
   void initState() {
     // TODO: implement initState
     getData();
-    debugPrint(DateTime.now().hour.toString());
+
     super.initState();
   }
 
   void getData() async {
     post = await ApiServices().getCurrentWeather();
-    setState(() {
-      DateTime.now().hour.toString() ==
-              post!.current.lastUpdated.split(":")[0].split(" ")[1]
-          ? "hello"
-          : "fds";
-    });
+    weekendWeather = await ApiServices().getWeekendWeather();
+    if (weekendWeather != null) {
+      forecastday = weekendWeather?.forecast?.forecastday;
+    }
+    debugPrint(DateTime.now().hour.toString());
+    debugPrint(
+        DateTime.fromMillisecondsSinceEpoch(forecastday![2].hour![7].timeEpoch!)
+            .toIso8601String());
+    setState(() {});
   }
 
   @override
@@ -82,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 5),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
@@ -98,45 +106,54 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 10),
                   SizedBox(
                     height: 120,
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: 20,
+                      itemCount: 4,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: ((context, index) => Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: SizedBox(
-                              height: 10,
-                              width: 80,
+                              width: 70,
                               child: Card(
                                 color: const Color.fromARGB(255, 107, 38, 240),
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                                  borderRadius: BorderRadius.circular(20),
                                   side: BorderSide.none,
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Icon(
-                                      Icons.cloud,
-                                      size: 35,
-                                      color: Colors.white,
+                                    SvgPicture.asset(
+                                      "assets/weather_icon_set/${forecastday != null ? forecastday![0].hour![index].condition!.text!.toLowerCase() : "sunny"}"
+                                      ".svg",
+                                      width: 40,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      forecastday != null
+                                          ? forecastday![0]
+                                              .hour![index]
+                                              .time!
+                                              .split(" ")[1]
+                                          : "",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey[300],
+                                      ),
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
-                                      hour ?? "nothig",
+                                      forecastday != null
+                                          ? "${forecastday![0].hour![index].tempC!.round()}°C"
+                                          : '',
                                       style: const TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey,
+                                        fontSize: 18,
+                                        color: Colors.white,
                                       ),
-                                    ),
-                                    Text(
-                                      "30",
-                                      style: TextStyle(
-                                          fontSize: 18, color: Colors.white),
                                     )
                                   ],
                                 ),
@@ -145,13 +162,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           )),
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   Expanded(
                     child: FractionallySizedBox(
                         widthFactor: 0.9,
                         child: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: 10,
+                          itemCount:
+                              forecastday != null ? forecastday!.length : 1,
                           itemBuilder: ((context, index) => SizedBox(
                                 child: SizedBox(
                                   // height: 50,
@@ -162,8 +180,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: const Color.fromARGB(
                                           255, 107, 38, 240),
                                       child: Row(
-                                        children: const [
-                                          Padding(
+                                        children: [
+                                          const Padding(
                                             padding: EdgeInsets.all(15.0),
                                             child: Icon(
                                               Icons.cloud,
@@ -171,7 +189,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           Text(
-                                            "Mondy",
+                                            forecastday != null
+                                                ? DateFormat('EEEE').format(
+                                                    DateTime.parse(
+                                                        forecastday![index]
+                                                            .hour![12]
+                                                            .time!))
+                                                : "Mondy",
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -223,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       alignment: Alignment.topLeft,
                                       child: Text(
                                         post!.location.name,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       ),
