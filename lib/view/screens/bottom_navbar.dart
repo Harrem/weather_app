@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:weather_app/view/screens/HomeScreen.dart';
-import 'package:weather_app/view/screens/SearchScreen.dart';
-import 'package:weather_app/view/screens/SettingScreen.dart';
+import 'package:weather_app/view/screens/home_screen.dart';
+import 'package:weather_app/view/screens/search_screen.dart';
+import 'package:weather_app/view/screens/setting_screen.dart';
 import 'package:flutter/cupertino.dart';
 
 class PageState extends StatefulWidget {
@@ -50,17 +50,17 @@ class _PageStateState extends State<PageState> {
                       GButton(
                         gap: 10,
                         icon: CupertinoIcons.home,
-                        text: 'سەرەکی',
+                        text: 'Home',
                       ),
                       GButton(
                         gap: 10,
                         icon: CupertinoIcons.search,
-                        text: 'گەڕان',
+                        text: 'Search',
                       ),
                       GButton(
                         gap: 10,
                         icon: CupertinoIcons.settings,
-                        text: 'ڕێکخستنەکان',
+                        text: 'Settings',
                       ),
                     ],
                     selectedIndex: _selectedIndex,

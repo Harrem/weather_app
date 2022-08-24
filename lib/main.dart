@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/theme/custom_theme.dart';
-import 'package:weather_app/view/screens/MainPageState.dart';
+import 'package:weather_app/view/screens/bottom_navbar.dart';
 
 void main() {
   runApp(const MyApp());

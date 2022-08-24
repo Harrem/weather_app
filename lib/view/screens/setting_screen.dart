@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:weather_app/Variables.dart';
-import 'package:weather_app/controller/apiServices.dart';
-import 'package:weather_app/controller/getLocation.dart';
-import 'package:weather_app/view/Widgets/InfWidget.dart';
-import 'package:weather_app/view/screens/SearchScreen.dart';
+import 'package:weather_app/_variables.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -27,7 +21,7 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
         centerTitle: true,
       ),
       body: ListView(
@@ -37,7 +31,7 @@ class _SettingScreenState extends State<SettingScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Temprature Type'),
+                const Text('Temprature Type'),
                 ToggleSwitch(
                   minWidth: 50,
                   minHeight: 30,
@@ -47,9 +41,9 @@ class _SettingScreenState extends State<SettingScreen> {
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
-                  labels: ['C', 'F'],
+                  labels: const ['C', 'F'],
                   borderWidth: 2.0,
-                  activeBgColors: [
+                  activeBgColors: const [
                     [Colors.blue],
                     [Colors.blue],
                   ],
@@ -69,7 +63,7 @@ class _SettingScreenState extends State<SettingScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Mode'),
+                const Text('Mode'),
                 ToggleSwitch(
                   minWidth: 50,
                   minHeight: 30,
@@ -79,12 +73,15 @@ class _SettingScreenState extends State<SettingScreen> {
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
-                  icons: [Icons.light_mode_outlined, Icons.dark_mode_outlined],
+                  icons: const [
+                    Icons.light_mode_outlined,
+                    Icons.dark_mode_outlined
+                  ],
                   iconSize: 30.0,
                   borderWidth: 3,
                   activeBgColors: [
                     [Colors.yellow, Colors.amber.shade600],
-                    [Colors.grey, Colors.black]
+                    const [Colors.grey, Colors.black]
                   ],
                   onToggle: (index) {
                     if (index == 0) {
