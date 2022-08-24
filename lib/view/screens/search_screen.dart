@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:location/location.dart' as loc;
@@ -28,8 +29,8 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Container(
         height: double.maxFinite,
         decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/bk.jpg'), fit: BoxFit.cover)),
+          color: Color.fromARGB(255, 143, 224, 255),
+        ),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -39,7 +40,11 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
-                      '21th July, 2022',
+                      '${Vars.post?.location.localtime.split(' ')[0]}'
+                                  .toString() ==
+                              'null'
+                          ? ''
+                          : '${Vars.post?.location.localtime.split(' ')[0]}',
                       style: TextStyle(
                           color: Colors.white.withOpacity(0.7), fontSize: 17),
                     ),
@@ -63,7 +68,6 @@ class _SearchScreenState extends State<SearchScreen> {
                               borderRadius: BorderRadius.circular(14),
                               borderSide: BorderSide.none),
                           hintText: 'Search for cities',
-                          //  hintTextDirection: TextDirection.rtl,
                           hintStyle: const TextStyle(
                             color: Colors.grey,
                             fontSize: 18,
@@ -71,11 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           prefixIcon: InkWell(
                             child: const Icon(Icons.search),
                             onTap: () async {
-                              final response = await apiServices
-                                  .getJsons(cityController.text);
-                              setState(() {
-                                Vars.post = response;
-                              });
+                              addWidgetToListbyText();
                             },
                           )),
                     ),
@@ -91,54 +91,25 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 20, top: 6),
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
+                        padding: const EdgeInsets.only(right: 20, top: 6),
+                        child: TextButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.white),
                           ),
                           onPressed: () async {
                             isOn = await location.serviceEnabled();
                             if (!isOn) {
                               location.requestService();
-                              setState(() {
-                                letPermission =
-                                    'لۆکەیشن کارا بکە بۆ ئەوەی بتوانین شوێنت دیاری بکەین';
-                              });
                             } else {
-                              await GetLocation().determinePosition();
-
-                              List<Placemark> placemarks =
-                                  await placemarkFromCoordinates(
-                                      GetLocation.lat, GetLocation.lon);
-
-                              ApiServices apiServices = ApiServices();
-                              final response = await apiServices
-                                  .getJsons('${placemarks[0].locality}');
-                              setState(() {
-                                country = placemarks[0].locality!;
-                              });
-
-                              Vars.post = response;
-                              Vars.history = InfWidget(
-                                temperature: Vars.istempratureTypeC == true
-                                    ? '${Vars.post?.current.tempC} C°'
-                                    : '${Vars.post?.current.tempF} F°',
-                                locationName: '${Vars.post?.location.name}',
-                                localTime: '${Vars.post?.location.localtime}',
-                                image: '${Vars.post?.current.condition.icon}',
-                              );
+                              addWidgetToListbyGPS();
                             }
                           },
-                          child: country == ''
-                              ? const Icon(
-                                  Icons.location_on_outlined,
-                                  color: Colors.black,
-                                )
-                              : Text(
-                                  country,
-                                  style: const TextStyle(color: Colors.black),
-                                )),
-                    ),
+                          child: const Icon(
+                            Icons.location_on_outlined,
+                            color: Colors.black,
+                          ),
+                        )),
                   ],
                 ),
                 if (!isOn)
@@ -150,22 +121,67 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ),
                 if (Vars.post != null)
-                  SizedBox(
+                  CarouselSlider.builder(
+                    itemCount: Vars.history.length,
+                    itemBuilder: (context, i, realIndex) {
+                      return Vars.history[i];
+                    },
+                    options: CarouselOptions(
+                      viewportFraction: 0.85,
                       height: size.height * 0.6,
-                      child: InfWidget(
-                        temperature: Vars.istempratureTypeC == true
-                            ? '${Vars.post?.current.tempC} C°'
-                            : '${Vars.post?.current.tempF} F°',
-                        locationName: '${Vars.post?.location.name}',
-                        localTime:
-                            '${Vars.post?.location.localtime.split(' ')[1]}\n${Vars.post?.location.localtime.split(' ')[0]}',
-                        image: 'http:${Vars.post?.current.condition.icon}',
-                      )),
+                      enableInfiniteScroll: false,
+                    ),
+                  )
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  addWidgetToListbyText() async {
+    final response = await apiServices.getJsons(cityController.text);
+    print(Vars.history.contains(cityController.text));
+    if (Vars.history.contains(cityController.text)) {}
+    setState(() {
+      Vars.post = response;
+      Vars.history.insert(
+          0,
+          InfWidget(
+            temperature: Vars.istempratureTypeC == true
+                ? '${Vars.post?.current.tempC} C°'
+                : '${Vars.post?.current.tempF} F°',
+            locationName: '${Vars.post?.location.name}',
+            localTime: '${Vars.history.contains(cityController.text)}',
+            image: 'http:${Vars.post?.current.condition.icon}',
+          ));
+    });
+  }
+
+  addWidgetToListbyGPS() async {
+    await GetLocation().determinePosition();
+
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(GetLocation.lat, GetLocation.lon);
+
+    ApiServices apiServices = ApiServices();
+    final response = await apiServices.getJsons('${placemarks[0].locality}');
+    setState(() {
+      country = placemarks[0].locality!;
+    });
+
+    Vars.post = response;
+
+    Vars.history.insert(
+        0,
+        InfWidget(
+          temperature: Vars.istempratureTypeC == true
+              ? '${Vars.post?.current.tempC} C°'
+              : '${Vars.post?.current.tempF} F°',
+          locationName: '${Vars.post?.location.name}',
+          localTime: '${Vars.post?.location.localtime}',
+          image: 'http:${Vars.post?.current.condition.icon}',
+        ));
   }
 }
