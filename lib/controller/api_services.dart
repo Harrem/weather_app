@@ -3,12 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-<<<<<<< HEAD:lib/controller/apiServices.dart
-import 'package:weather_app/model/currentWeather.dart';
-import 'package:weather_app/model/weekend_weather.dart';
-=======
 import 'package:weather_app/model/current_weather.dart';
->>>>>>> 761d093dc720615c781f28a7a47d1005446ff6e7:lib/controller/api_services.dart
+import 'package:weather_app/model/weekend_weather.dart';
 
 class ApiServices {
   String apiKey = "902833916c454c328aa105039221706";
