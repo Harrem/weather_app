@@ -51,4 +51,12 @@ class Varses extends ChangeNotifier {
     listOfHistory.remove(cityName);
     notifyListeners();
   }
+
+  reverseMap(Map map) {
+    Map newmap = {};
+    for (String theKey in map.keys.toList().reversed) {
+      newmap[theKey] = map[theKey];
+    }
+    return newmap;
+  }
 }

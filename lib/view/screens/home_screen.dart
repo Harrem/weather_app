@@ -23,9 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int hour = DateTime.now().hour;
   @override
   void initState() {
-    // TODO: implement initState
     getData();
-
     super.initState();
   }
 
@@ -194,8 +192,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             .hour![12]
                                                             .time!))
                                                 : "Mondy",
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            style: const TextStyle(
+                                                color: Colors.white),
                                           ),
                                         ],
                                       )),
@@ -379,6 +377,7 @@ class _HomeScreenState extends State<HomeScreen> {
 class GradientText extends StatelessWidget {
   const GradientText(
     this.text, {
+    super.key,
     required this.gradient,
     this.style,
   });

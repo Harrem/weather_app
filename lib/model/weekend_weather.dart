@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 class WeekendWeather {
   Location? location;
   Current? current;
@@ -17,7 +15,7 @@ class WeekendWeather {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (location != null) {
       data['location'] = location!.toJson();
     }
@@ -63,7 +61,7 @@ class Location {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['region'] = region;
     data['country'] = country;
@@ -160,7 +158,7 @@ class Current {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['last_updated_epoch'] = lastUpdatedEpoch;
     data['last_updated'] = lastUpdated;
     data['temp_c'] = tempC;
@@ -247,7 +245,7 @@ class AirQuality {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['co'] = co;
     data['no2'] = no2;
     data['o3'] = o3;
@@ -275,7 +273,7 @@ class Forecast {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (forecastday != null) {
       data['forecastday'] = forecastday!.map((v) => v.toJson()).toList();
     }
@@ -389,7 +387,7 @@ class Day {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['maxtemp_c'] = maxtempC;
     data['maxtemp_f'] = maxtempF;
     data['mintemp_c'] = mintempC;
@@ -441,7 +439,7 @@ class Astro {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['sunrise'] = sunrise;
     data['sunset'] = sunset;
     data['moonrise'] = moonrise;

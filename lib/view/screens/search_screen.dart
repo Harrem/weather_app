@@ -143,7 +143,10 @@ class SearchScreen extends StatelessWidget {
                         itemBuilder: (context, i, realIndex) {
                           return SizedBox(
                             width: size.width,
-                            child: value.listOfHistory.values.elementAt(i),
+                            child: value
+                                .reverseMap(value.listOfHistory)
+                                .values
+                                .elementAt(i),
                           );
                         },
                         options: CarouselOptions(

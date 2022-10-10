@@ -56,10 +56,10 @@ class InfWidget extends StatelessWidget {
                         backgroundColor:
                             MaterialStateProperty.all(Colors.white)),
                     onPressed: () {
-                      context.read<Varses>().deleteCountry(locationName);
+                      context.read<Varses>().setMainCountry(locationName);
                     },
                     child: const Text(
-                      'Remove',
+                      'add',
                       style: TextStyle(
                         color: Color.fromARGB(255, 98, 8, 234),
                       ),
@@ -73,10 +73,10 @@ class InfWidget extends StatelessWidget {
                         backgroundColor:
                             MaterialStateProperty.all(Colors.white)),
                     onPressed: () {
-                      context.read<Varses>().setMainCountry(locationName);
+                      context.read<Varses>().deleteCountry(locationName);
                     },
                     child: const Text(
-                      'add',
+                      'Remove',
                       style: TextStyle(
                         color: Color.fromARGB(255, 98, 8, 234),
                       ),
