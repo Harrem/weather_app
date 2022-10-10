@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:weather_app/_variables.dart';
+
+import '../../weather_provider.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -35,7 +37,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ToggleSwitch(
                   minWidth: 50,
                   minHeight: 30,
-                  initialLabelIndex: 0,
+                  initialLabelIndex: localStorage.read('CorF') ?? 0,
                   cornerRadius: 5,
                   activeFgColor: Colors.white,
                   inactiveBgColor: Colors.grey,
@@ -47,48 +49,9 @@ class _SettingScreenState extends State<SettingScreen> {
                     [Colors.blue],
                     [Colors.blue],
                   ],
-                  onToggle: (index) {
-                    if (index == 0) {
-                      Vars.istempratureTypeC = true;
-                    } else if (index == 1) {
-                      Vars.istempratureTypeC = false;
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Mode'),
-                ToggleSwitch(
-                  minWidth: 50,
-                  minHeight: 30,
-                  initialLabelIndex: 0,
-                  cornerRadius: 5.0,
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.grey,
-                  inactiveFgColor: Colors.white,
-                  totalSwitches: 2,
-                  icons: const [
-                    Icons.light_mode_outlined,
-                    Icons.dark_mode_outlined
-                  ],
-                  iconSize: 30.0,
-                  borderWidth: 3,
-                  activeBgColors: [
-                    [Colors.yellow, Colors.amber.shade600],
-                    const [Colors.grey, Colors.black]
-                  ],
-                  onToggle: (index) {
-                    if (index == 0) {
-                      Vars.istempratureTypeC = true;
-                    } else if (index == 1) {
-                      Vars.istempratureTypeC = false;
-                    }
+                  onToggle: (index) async {
+                    localStorage.write('CorF', index);
+                    context.read<Varses>().changeTempratureType(index!);
                   },
                 ),
               ],

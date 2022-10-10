@@ -6,6 +6,8 @@ import 'package:http/http.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/model/weekend_weather.dart';
 
+import '../weather_provider.dart';
+
 class ApiServices {
   String apiKey = "902833916c454c328aa105039221706";
   Future<Post> getJsons(String cityName) async {
@@ -24,7 +26,7 @@ class ApiServices {
   Future<Post?> getCurrentWeather() async {
     Post? forecast;
     final url =
-        "http://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=tokyo&days=7&aqi=yes&alerts=no";
+        "http://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=${localStorage.read('mainCountry')}&days=7&aqi=yes&alerts=no";
 
     final Response res;
     try {

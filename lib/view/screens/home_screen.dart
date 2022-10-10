@@ -39,7 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
     debugPrint(
         DateTime.fromMillisecondsSinceEpoch(forecastday![2].hour![7].timeEpoch!)
             .toIso8601String());
-    setState(() {});
   }
 
   @override
@@ -172,7 +171,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               forecastday != null ? forecastday!.length : 1,
                           itemBuilder: ((context, index) => SizedBox(
                                 child: SizedBox(
-                                  // height: 50,
                                   child: Card(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:

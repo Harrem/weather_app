@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/_variables.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_app/weather_provider.dart';
 
-// ignore: must_be_immutable
 class InfWidget extends StatelessWidget {
-  InfWidget(
+  const InfWidget(
       {Key? key,
       required this.temperature,
       required this.locationName,
@@ -11,28 +11,31 @@ class InfWidget extends StatelessWidget {
       required this.image})
       : super(key: key);
 
-  String temperature;
-  String locationName;
-  String localTime;
-  String image;
+  final double temperature;
+  final String locationName;
+  final String localTime;
+  final String image;
   @override
   Widget build(BuildContext context) {
     return Card(
         elevation: 4,
         shadowColor: Colors.black,
-        color: Color.fromARGB(255, 98, 8, 234),
+        color: const Color.fromARGB(255, 98, 8, 234),
         margin: const EdgeInsets.all(15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
               locationName,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
-            Text(
-              temperature,
-              style: const TextStyle(fontSize: 20, color: Colors.white),
-            ),
+            localStorage.read('tempratureType') == true
+                ? Text(
+                    '$temperature C°',
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
+                  )
+                : Text('${((temperature * 1.8) + 32).toStringAsFixed(1)} F°',
+                    style: const TextStyle(fontSize: 20, color: Colors.white)),
             Image.network(image),
             Center(
               child: Text(
@@ -52,7 +55,9 @@ class InfWidget extends StatelessWidget {
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.white)),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<Varses>().deleteCountry(locationName);
+                    },
                     child: const Text(
                       'Remove',
                       style: TextStyle(
@@ -67,7 +72,9 @@ class InfWidget extends StatelessWidget {
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.white)),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<Varses>().setMainCountry(locationName);
+                    },
                     child: const Text(
                       'add',
                       style: TextStyle(

@@ -42,6 +42,7 @@ dependencies:
   provider: ^6.0.3
   carousel_slider: ^4.1.1
   intl: any
+  get_storage: ^2.0.3
 
 
 

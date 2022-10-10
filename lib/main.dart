@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/theme/custom_theme.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/view/screens/bottom_navbar.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:weather_app/weather_provider.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -11,10 +14,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: CustomTheme.lightTheme,
-      home: const PageState(),
+    return ChangeNotifierProvider(
+      create: (context) => Varses(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'nrt',
+        ),
+        home: const PageState(),
+      ),
     );
   }
 }

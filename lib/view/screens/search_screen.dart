@@ -1,36 +1,31 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:location/location.dart' as loc;
-import 'package:weather_app/_variables.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/controller/api_services.dart';
 import 'package:weather_app/controller/get_location.dart';
-import 'package:weather_app/view/Widgets/widget_search_screen.dart';
+import 'package:weather_app/weather_provider.dart';
 
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
-}
-
-class _SearchScreenState extends State<SearchScreen> {
-  loc.Location location = loc.Location();
-  ApiServices apiServices = ApiServices();
-  TextEditingController cityController = TextEditingController();
-  String country = "";
-  String letPermission = '';
-  bool isOn = false;
-
-  @override
   Widget build(BuildContext context) {
+    TextEditingController cityController = TextEditingController();
+    final varsProvider = context.read<Varses>();
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Container(
         height: double.maxFinite,
         decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 143, 224, 255),
-        ),
+            gradient: LinearGradient(
+          end: Alignment.topCenter,
+          colors: [
+            Color.fromARGB(255, 143, 224, 255),
+            Color.fromARGB(255, 113, 200, 235),
+          ],
+        )),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -40,11 +35,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
-                      '${Vars.post?.location.localtime.split(' ')[0]}'
-                                  .toString() ==
-                              'null'
-                          ? ''
-                          : '${Vars.post?.location.localtime.split(' ')[0]}',
+                      '21th July, 2022',
                       style: TextStyle(
                           color: Colors.white.withOpacity(0.7), fontSize: 17),
                     ),
@@ -58,6 +49,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: TextField(
                       style: const TextStyle(color: Colors.black),
                       controller: cityController,
+                      textDirection: TextDirection.rtl,
                       cursorColor: Colors.grey,
                       decoration: InputDecoration(
                           contentPadding:
@@ -67,15 +59,21 @@ class _SearchScreenState extends State<SearchScreen> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
                               borderSide: BorderSide.none),
-                          hintText: 'Search for cities',
+                          hintText: 'Search for location',
+                          hintTextDirection: TextDirection.rtl,
                           hintStyle: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 18,
-                          ),
+                              color: Colors.grey,
+                              fontSize: 18,
+                              fontFamily: 'nrt'),
                           prefixIcon: InkWell(
                             child: const Icon(Icons.search),
                             onTap: () async {
-                              addWidgetToListbyText();
+                              final response = await apiServices
+                                  .getJsons(cityController.text);
+
+                              varsProvider.post = response;
+
+                              varsProvider.addWidget(cityController.text);
                             },
                           )),
                     ),
@@ -84,104 +82,84 @@ class _SearchScreenState extends State<SearchScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Padding(
+                        padding: const EdgeInsets.only(left: 20, top: 6),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                            ),
+                            onPressed: () async {
+                              isLocationOn = await location.serviceEnabled();
+                              if (!isLocationOn) {
+                                location.requestService();
+
+                                varsProvider.locationPermission();
+                              } else {
+                                await GetLocation().determinePosition();
+
+                                List<Placemark> placemarks =
+                                    await placemarkFromCoordinates(
+                                        GetLocation.lat, GetLocation.lon);
+
+                                ApiServices apiServices = ApiServices();
+                                varsProvider.post = await apiServices
+                                    .getJsons('${placemarks[0].locality}');
+
+                                varsProvider
+                                    .addWidget(placemarks[0].locality ?? '');
+                              }
+                            },
+                            child: const Icon(
+                              Icons.location_on_outlined,
+                              color: Colors.black,
+                            ))),
                     Container(
-                      padding: const EdgeInsets.only(left: 20, top: 6),
+                      padding: const EdgeInsets.only(right: 20, top: 6),
                       child: const Text(
-                        'Get my location',
+                        'find my location',
+                        style: TextStyle(fontFamily: 'nrt'),
                       ),
                     ),
-                    Padding(
-                        padding: const EdgeInsets.only(right: 20, top: 6),
-                        child: TextButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.white),
-                          ),
-                          onPressed: () async {
-                            isOn = await location.serviceEnabled();
-                            if (!isOn) {
-                              location.requestService();
-                            } else {
-                              addWidgetToListbyGPS();
-                            }
-                          },
-                          child: const Icon(
-                            Icons.location_on_outlined,
-                            color: Colors.black,
-                          ),
-                        )),
                   ],
                 ),
-                if (!isOn)
+                if (!isLocationOn)
                   Padding(
-                    padding: const EdgeInsets.only(right: 20, bottom: 20),
-                    child: Text(
-                      letPermission,
-                      style: const TextStyle(color: Colors.red, fontSize: 11),
-                    ),
-                  ),
-                if (Vars.post != null)
-                  CarouselSlider.builder(
-                    itemCount: Vars.history.length,
-                    itemBuilder: (context, i, realIndex) {
-                      return Vars.history[i];
-                    },
-                    options: CarouselOptions(
-                      viewportFraction: 0.85,
+                      padding: const EdgeInsets.only(right: 20, bottom: 20),
+                      child: Consumer<Varses>(
+                        builder: (context, value, child) {
+                          return Text(
+                            value.letPermission,
+                            style: const TextStyle(
+                                color: Colors.red, fontSize: 11),
+                          );
+                        },
+                      )),
+                Consumer<Varses>(
+                  builder: (context, value, child) {
+                    return SizedBox(
                       height: size.height * 0.6,
-                      enableInfiniteScroll: false,
-                    ),
-                  )
+                      child: CarouselSlider.builder(
+                        itemCount: varsProvider.listOfHistory.length,
+                        itemBuilder: (context, i, realIndex) {
+                          return SizedBox(
+                            width: size.width,
+                            child: value.listOfHistory.values.elementAt(i),
+                          );
+                        },
+                        options: CarouselOptions(
+                          viewportFraction: 0.85,
+                          height: size.height * 0.6,
+                          enableInfiniteScroll: false,
+                        ),
+                      ),
+                    );
+                  },
+                )
               ],
             ),
           ),
         ),
       ),
     );
-  }
-
-  addWidgetToListbyText() async {
-    final response = await apiServices.getJsons(cityController.text);
-    print(Vars.history.contains(cityController.text));
-    if (Vars.history.contains(cityController.text)) {}
-    setState(() {
-      Vars.post = response;
-      Vars.history.insert(
-          0,
-          InfWidget(
-            temperature: Vars.istempratureTypeC == true
-                ? '${Vars.post?.current.tempC} C°'
-                : '${Vars.post?.current.tempF} F°',
-            locationName: '${Vars.post?.location.name}',
-            localTime: '${Vars.history.contains(cityController.text)}',
-            image: 'http:${Vars.post?.current.condition.icon}',
-          ));
-    });
-  }
-
-  addWidgetToListbyGPS() async {
-    await GetLocation().determinePosition();
-
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(GetLocation.lat, GetLocation.lon);
-
-    ApiServices apiServices = ApiServices();
-    final response = await apiServices.getJsons('${placemarks[0].locality}');
-    setState(() {
-      country = placemarks[0].locality!;
-    });
-
-    Vars.post = response;
-
-    Vars.history.insert(
-        0,
-        InfWidget(
-          temperature: Vars.istempratureTypeC == true
-              ? '${Vars.post?.current.tempC} C°'
-              : '${Vars.post?.current.tempF} F°',
-          locationName: '${Vars.post?.location.name}',
-          localTime: '${Vars.post?.location.localtime}',
-          image: 'http:${Vars.post?.current.condition.icon}',
-        ));
   }
 }
