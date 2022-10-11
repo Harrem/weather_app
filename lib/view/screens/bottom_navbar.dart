@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:weather_app/view/screens/home_screen.dart';
 import 'package:weather_app/view/screens/search_screen.dart';
@@ -31,35 +32,35 @@ class _PageStateState extends State<PageState> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 margin: const EdgeInsets.only(bottom: 10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white),
                 width: 300,
                 child: GNav(
-                    tabBackgroundColor:
-                        const Color.fromARGB(255, 240, 216, 255),
-                    activeColor: Colors.deepPurple[400],
+                    tabBackgroundColor: Color.fromARGB(255, 234, 234, 247),
+                    activeColor: Color.fromARGB(255, 100, 110, 150),
                     color: Colors.grey[700],
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(10),
                     duration: const Duration(milliseconds: 200),
                     tabBorderRadius: 15,
                     backgroundColor: Colors.transparent,
                     tabs: const [
                       GButton(
                         gap: 10,
-                        icon: CupertinoIcons.home,
+                        icon: Iconsax.home5,
                         text: 'Home',
                       ),
                       GButton(
-                        gap: 10,
-                        icon: CupertinoIcons.search,
+                        gap: 15,
+                        icon: Iconsax.search_normal5,
                         text: 'Search',
                       ),
                       GButton(
                         gap: 10,
-                        icon: CupertinoIcons.settings,
+                        icon: Iconsax.setting1,
                         text: 'Settings',
                       ),
                     ],
