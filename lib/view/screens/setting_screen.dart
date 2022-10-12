@@ -25,13 +25,13 @@ class SettingScreen extends StatelessWidget {
                 ToggleSwitch(
                   minWidth: 50,
                   minHeight: 30,
-                  initialLabelIndex: localStorage.read('CorF') ?? 0,
+                  initialLabelIndex: localStorage.read('CorF') ?? 1,
                   cornerRadius: 5,
                   activeFgColor: Colors.white,
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
-                  labels: const ['C', 'F'],
+                  labels: const ['F', 'C'],
                   borderWidth: 2.0,
                   activeBgColors: const [
                     [Colors.blue],

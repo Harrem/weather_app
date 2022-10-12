@@ -279,85 +279,89 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Color.fromARGB(255, 202, 209, 227),
                                           ]),
                                     ),
+                                    const SizedBox(height: 30),
+                                    IntrinsicHeight(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Column(
+                                            children: [
+                                              const Text(
+                                                "Wind",
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.grey),
+                                              ),
+                                              const SizedBox(height: 5),
+                                              Text(
+                                                  post != null
+                                                      ? post!.current.windKph
+                                                          .round()
+                                                          .toString()
+                                                      : "N/A",
+                                                  style: const TextStyle(
+                                                      fontSize: 25,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ],
+                                          ),
+                                          const VerticalDivider(
+                                            color: Colors.grey,
+                                            thickness: 0.5,
+                                            indent: 10,
+                                          ),
+                                          Column(
+                                            children: [
+                                              const Text(
+                                                "Temp",
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 5),
+                                              Text(
+                                                post != null
+                                                    ? "${post!.current.tempC.round()}°C"
+                                                    : "N/A",
+                                                style: const TextStyle(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const VerticalDivider(
+                                            color: Colors.grey,
+                                            thickness: 0.5,
+                                          ),
+                                          Column(
+                                            children: [
+                                              const Text(
+                                                "Humidity",
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.grey),
+                                              ),
+                                              const SizedBox(height: 5),
+                                              Text(
+                                                post != null
+                                                    ? "${post!.current.humidity.round()}%"
+                                                    : "N/A",
+                                                style: const TextStyle(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 );
                               })),
-                          const SizedBox(height: 30),
-                          IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Column(
-                                  children: [
-                                    const Text(
-                                      "Wind",
-                                      style: TextStyle(
-                                          fontSize: 12, color: Colors.grey),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                        post != null
-                                            ? post!.current.windKph
-                                                .round()
-                                                .toString()
-                                            : "N/A",
-                                        style: const TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold)),
-                                  ],
-                                ),
-                                const VerticalDivider(
-                                  color: Colors.grey,
-                                  thickness: 0.5,
-                                  indent: 10,
-                                ),
-                                Column(
-                                  children: [
-                                    const Text(
-                                      "Temp",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      post != null
-                                          ? "${post!.current.tempC.round()}°C"
-                                          : "N/A",
-                                      style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const VerticalDivider(
-                                  color: Colors.grey,
-                                  thickness: 0.5,
-                                ),
-                                Column(
-                                  children: [
-                                    const Text(
-                                      "Humidit",
-                                      style: TextStyle(
-                                          fontSize: 12, color: Colors.grey),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      post != null
-                                          ? "${post!.current.humidity.round()}%"
-                                          : "N/A",
-                                      style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
                         ]),
                   ),
                 ),

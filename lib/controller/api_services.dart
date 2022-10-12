@@ -12,7 +12,7 @@ class ApiServices {
   String apiKey = "902833916c454c328aa105039221706";
   Future<Post> getJsons(String cityName) async {
     final url =
-        "http://api.weatherapi.com/v1/current.json?key=$apiKey&q=$cityName&aqi=no";
+        "http://api.weatherapi.com/v1/current.json?key=$apiKey&q=${cityName.toLowerCase()}&aqi=no";
 
     final response = await get(Uri.parse(url));
 

@@ -29,7 +29,7 @@ class InfWidget extends StatelessWidget {
               locationName,
               style: const TextStyle(color: Colors.white),
             ),
-            localStorage.read('tempratureType') == true
+            localStorage.read('tempratureType') == false
                 ? Text(
                     '$temperature C°',
                     style: const TextStyle(fontSize: 20, color: Colors.white),
@@ -57,6 +57,7 @@ class InfWidget extends StatelessWidget {
                             MaterialStateProperty.all(Colors.white)),
                     onPressed: () {
                       context.read<Varses>().setMainCountry(locationName);
+                      context.read<Varses>().navigations(0);
                     },
                     child: const Text(
                       'add',
