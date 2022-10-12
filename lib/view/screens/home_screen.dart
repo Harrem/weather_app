@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    getData();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -125,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SvgPicture.asset(
-                                      "assets/weather_icon_set/${forecastday != null ? forecastday![0].hour![index].condition!.text!.toLowerCase() : "sunny"}"
+                                      "assets/weather_icon_set/${forecastday != null ? forecastday![0].hour![index].condition!.text!.toLowerCase() : "Error"}"
                                       ".svg",
                                       width: 40,
                                     ),
@@ -217,6 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Container(
                             alignment: Alignment.topLeft,
                             child: Text(
+                              // 'Today, ${DateFormat.}'
                               "Today, ${DateTimeFormatter.formatDate(DateTime.now().toIso8601String())}",
                               style: const TextStyle(
                                   fontSize: 14,
