@@ -124,46 +124,59 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: SizedBox(
                             width: 70,
                             child: Card(
-                              color: const Color.fromARGB(255, 107, 38, 240),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                side: BorderSide.none,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/weather_icon_set/${forecastday != null ? forecastday![0].hour![index].condition!.text!.toLowerCase() : 'Error'}"
-                                    ".svg",
-                                    width: 40,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    forecastday != null
-                                        ? forecastday![0]
-                                            .hour![index]
-                                            .time!
-                                            .split(" ")[1]
-                                        : "",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey[300],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    forecastday != null
-                                        ? "${forecastday![nextHourDay].hour![nextHours].tempC!.round()}°C"
-                                        : 'null',
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                                color: const Color.fromARGB(255, 107, 38, 240),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  side: BorderSide.none,
+                                ),
+                                child: FutureBuilder(
+                                  future: ApiServices().getWeekendWeather(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const CircularProgressIndicator();
+                                    }
+                                    if (snapshot.data == null) {
+                                      return const Text(
+                                          "error while fetching data");
+                                    }
+                                    return Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/weather_icon_set/${forecastday != null ? forecastday![0].hour![index].condition!.text!.toLowerCase() : 'Error'}"
+                                          ".svg",
+                                          width: 40,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          forecastday != null
+                                              ? forecastday![0]
+                                                  .hour![index]
+                                                  .time!
+                                                  .split(" ")[1]
+                                              : "",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey[300],
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          forecastday != null
+                                              ? "${forecastday![nextHourDay].hour![nextHours].tempC!.round()}°C"
+                                              : 'null',
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  },
+                                )),
                           ),
                         );
                       }),
