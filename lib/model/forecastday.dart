@@ -1,15 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+
 import 'astro.dart';
 import 'day.dart';
 import 'hour.dart';
 
 class Forecastday {
-  String date;
-  int dateEpoch;
-  Day day;
-  Astro astro;
-  List<Hour> hour;
+  String? date;
+  int? dateEpoch;
+  Day? day;
+  Astro? astro;
+  List<Hour>? hour;
   Forecastday({
     required this.date,
     required this.dateEpoch,
@@ -38,23 +41,29 @@ class Forecastday {
     return <String, dynamic>{
       'date': date,
       'dateEpoch': dateEpoch,
-      'day': day.toMap(),
-      'astro': astro.toMap(),
-      'hour': hour.map((x) => x.toMap()).toList(),
+      'day': day?.toMap(),
+      'astro': astro?.toMap(),
+      'hour': hour?.map((x) => x.toMap()).toList(),
     };
   }
 
   factory Forecastday.fromMap(Map<String, dynamic> map) {
     return Forecastday(
-      date: map['date'] as String,
-      dateEpoch: map['dateEpoch'] as int,
-      day: Day.fromMap(map['day'] as Map<String, dynamic>),
-      astro: Astro.fromMap(map['astro'] as Map<String, dynamic>),
-      hour: List<Hour>.from(
-        (map['hour'] as List<int>).map<Hour>(
-          (x) => Hour.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      date: map['date'] != null ? map['date'] as String : null,
+      dateEpoch: map['dateEpoch'] != null ? map['dateEpoch'] as int : null,
+      day: map['day'] != null
+          ? Day.fromMap(map['day'] as Map<String, dynamic>)
+          : null,
+      astro: map['astro'] != null
+          ? Astro.fromMap(map['astro'] as Map<String, dynamic>)
+          : null,
+      hour: map['hour'] != null
+          ? List<Hour>.from(
+              (map['hour'] as List<dynamic>).map<Hour?>(
+                (x) => Hour.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : null,
     );
   }
 

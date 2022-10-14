@@ -183,55 +183,43 @@ class Hour {
     };
   }
 
-  factory Hour.fromMap(Map<String, dynamic> map) {
-    return Hour(
-      timeEpoch: map['timeEpoch'] != null ? map['timeEpoch'] as int : null,
-      time: map['time'] != null ? map['time'] as String : null,
-      tempC: map['tempC'] != null ? map['tempC'] as double : null,
-      tempF: map['tempF'] != null ? map['tempF'] as double : null,
-      isDay: map['isDay'] != null ? map['isDay'] as int : null,
-      condition: map['condition'] != null
-          ? Condition.fromMap(map['condition'] as Map<String, dynamic>)
-          : null,
-      windMph: map['windMph'] != null ? map['windMph'] as double : null,
-      windKph: map['windKph'] != null ? map['windKph'] as double : null,
-      windDegree: map['windDegree'] != null ? map['windDegree'] as int : null,
-      windDir: map['windDir'] != null ? map['windDir'] as String : null,
-      pressureMb:
-          map['pressureMb'] != null ? map['pressureMb'] as double : null,
-      pressureIn:
-          map['pressureIn'] != null ? map['pressureIn'] as double : null,
-      precipMm: map['precipMm'] != null ? map['precipMm'] as double : null,
-      precipIn: map['precipIn'] != null ? map['precipIn'] as double : null,
-      humidity: map['humidity'] != null ? map['humidity'] as int : null,
-      cloud: map['cloud'] != null ? map['cloud'] as int : null,
-      feelslikeC:
-          map['feelslikeC'] != null ? map['feelslikeC'] as double : null,
-      feelslikeF:
-          map['feelslikeF'] != null ? map['feelslikeF'] as double : null,
-      windchillC:
-          map['windchillC'] != null ? map['windchillC'] as double : null,
-      windchillF:
-          map['windchillF'] != null ? map['windchillF'] as double : null,
-      heatindexC:
-          map['heatindexC'] != null ? map['heatindexC'] as double : null,
-      heatindexF:
-          map['heatindexF'] != null ? map['heatindexF'] as double : null,
-      dewpointC: map['dewpointC'] != null ? map['dewpointC'] as double : null,
-      dewpointF: map['dewpointF'] != null ? map['dewpointF'] as double : null,
-      willItRain: map['willItRain'] != null ? map['willItRain'] as int : null,
-      chanceOfRain:
-          map['chanceOfRain'] != null ? map['chanceOfRain'] as int : null,
-      willItSnow: map['willItSnow'] != null ? map['willItSnow'] as int : null,
-      chanceOfSnow:
-          map['chanceOfSnow'] != null ? map['chanceOfSnow'] as int : null,
-      visKm: map['visKm'] != null ? map['visKm'] as double : null,
-      visMiles: map['visMiles'] != null ? map['visMiles'] as double : null,
-      gustMph: map['gustMph'] != null ? map['gustMph'] as double : null,
-      gustKph: map['gustKph'] != null ? map['gustKph'] as double : null,
-      uv: map['uv'] != null ? map['uv'] as double : null,
-    );
-  }
+  factory Hour.fromMap(Map<String, dynamic> data) => Hour(
+        timeEpoch: data['time_epoch'] as int?,
+        time: data['time'] as String?,
+        tempC: (data['temp_c'] as num?)?.toDouble(),
+        tempF: (data['temp_f'] as num?)?.toDouble(),
+        isDay: data['is_day'] as int?,
+        condition: data['condition'] == null
+            ? null
+            : Condition.fromMap(data['condition'] as Map<String, dynamic>),
+        windMph: (data['wind_mph'] as num?)?.toDouble(),
+        windKph: data['wind_kph'] as double?,
+        windDegree: data['wind_degree'] as int?,
+        windDir: data['wind_dir'] as String?,
+        pressureMb: data['pressure_mb'] as double?,
+        pressureIn: (data['pressure_in'] as num?)?.toDouble(),
+        precipMm: data['precip_mm'] as double?,
+        precipIn: data['precip_in'] as double?,
+        humidity: data['humidity'] as int?,
+        cloud: data['cloud'] as int?,
+        feelslikeC: (data['feelslike_c'] as num?)?.toDouble(),
+        feelslikeF: (data['feelslike_f'] as num?)?.toDouble(),
+        windchillC: (data['windchill_c'] as num?)?.toDouble(),
+        windchillF: (data['windchill_f'] as num?)?.toDouble(),
+        heatindexC: (data['heatindex_c'] as num?)?.toDouble(),
+        heatindexF: (data['heatindex_f'] as num?)?.toDouble(),
+        dewpointC: data['dewpoint_c'] as double?,
+        dewpointF: data['dewpoint_f'] as double?,
+        willItRain: data['will_it_rain'] as int?,
+        chanceOfRain: data['chance_of_rain'] as int?,
+        willItSnow: data['will_it_snow'] as int?,
+        chanceOfSnow: data['chance_of_snow'] as int?,
+        visKm: data['vis_km'] as double?,
+        visMiles: data['vis_miles'] as double?,
+        gustMph: data['gust_mph'] as double?,
+        gustKph: (data['gust_kph'] as num?)?.toDouble(),
+        uv: data['uv'] as double?,
+      );
 
   String toJson() => json.encode(toMap());
 

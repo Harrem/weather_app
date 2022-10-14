@@ -1,14 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class AirQuality {
-  double co;
-  double no2;
-  double o3;
-  double so2;
-  double pm25;
-  double pm10;
-  int usEpaIndex;
-  int gbDefraIndex;
+  double? co;
+  double? no2;
+  double? o3;
+  double? so2;
+  double? pm25;
+  double? pm10;
+  int? usEpaIndex;
+  int? gbDefraIndex;
   AirQuality({
     required this.co,
     required this.no2,
@@ -55,18 +56,16 @@ class AirQuality {
     };
   }
 
-  factory AirQuality.fromMap(Map<String, dynamic> map) {
-    return AirQuality(
-      co: map['co'] as double,
-      no2: map['no2'] as double,
-      o3: map['o3'] as double,
-      so2: map['so2'] as double,
-      pm25: map['pm25'] as double,
-      pm10: map['pm10'] as double,
-      usEpaIndex: map['usEpaIndex'] as int,
-      gbDefraIndex: map['gbDefraIndex'] as int,
-    );
-  }
+  factory AirQuality.fromMap(Map<String, dynamic> data) => AirQuality(
+        co: (data['co'] as num?)?.toDouble(),
+        no2: (data['no2'] as num?)?.toDouble(),
+        o3: (data['o3'] as num?)?.toDouble(),
+        so2: (data['so2'] as num?)?.toDouble(),
+        pm25: (data['pm2_5'] as num?)?.toDouble(),
+        pm10: (data['pm10'] as num?)?.toDouble(),
+        usEpaIndex: data['us-epa-index'] as int?,
+        gbDefraIndex: data['gb-defra-index'] as int?,
+      );
 
   String toJson() => json.encode(toMap());
 

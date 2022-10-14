@@ -4,30 +4,30 @@ import 'air_quality.dart';
 import 'condition.dart';
 
 class Current {
-  int lastUpdatedEpoch;
-  String lastUpdated;
-  double tempC;
-  double tempF;
-  int isDay;
-  Condition condition;
-  double windMph;
-  double windKph;
-  int windDegree;
-  String windDir;
-  double pressureMb;
-  double pressureIn;
-  double precipMm;
-  double precipIn;
-  int humidity;
-  int cloud;
-  double feelslikeC;
-  double feelslikeF;
-  double visKm;
-  double visMiles;
-  double uv;
-  double gustMph;
-  double gustKph;
-  AirQuality airQuality;
+  int? lastUpdatedEpoch;
+  String? lastUpdated;
+  double? tempC;
+  double? tempF;
+  int? isDay;
+  Condition? condition;
+  double? windMph;
+  double? windKph;
+  int? windDegree;
+  String? windDir;
+  double? pressureMb;
+  double? pressureIn;
+  double? precipMm;
+  double? precipIn;
+  int? humidity;
+  int? cloud;
+  double? feelslikeC;
+  double? feelslikeF;
+  double? visKm;
+  double? visMiles;
+  double? uv;
+  double? gustMph;
+  double? gustKph;
+  AirQuality? airQuality;
   Current({
     required this.lastUpdatedEpoch,
     required this.lastUpdated,
@@ -116,7 +116,7 @@ class Current {
       'tempC': tempC,
       'tempF': tempF,
       'isDay': isDay,
-      'condition': condition.toMap(),
+      'condition': condition?.toMap(),
       'windMph': windMph,
       'windKph': windKph,
       'windDegree': windDegree,
@@ -134,38 +134,40 @@ class Current {
       'uv': uv,
       'gustMph': gustMph,
       'gustKph': gustKph,
-      'airQuality': airQuality.toMap(),
+      'airQuality': airQuality?.toMap(),
     };
   }
 
-  factory Current.fromMap(Map<String, dynamic> map) {
-    return Current(
-      lastUpdatedEpoch: map['lastUpdatedEpoch'] as int,
-      lastUpdated: map['lastUpdated'] as String,
-      tempC: map['tempC'] as double,
-      tempF: map['tempF'] as double,
-      isDay: map['isDay'] as int,
-      condition: Condition.fromMap(map['condition'] as Map<String, dynamic>),
-      windMph: map['windMph'] as double,
-      windKph: map['windKph'] as double,
-      windDegree: map['windDegree'] as int,
-      windDir: map['windDir'] as String,
-      pressureMb: map['pressureMb'] as double,
-      pressureIn: map['pressureIn'] as double,
-      precipMm: map['precipMm'] as double,
-      precipIn: map['precipIn'] as double,
-      humidity: map['humidity'] as int,
-      cloud: map['cloud'] as int,
-      feelslikeC: map['feelslikeC'] as double,
-      feelslikeF: map['feelslikeF'] as double,
-      visKm: map['visKm'] as double,
-      visMiles: map['visMiles'] as double,
-      uv: map['uv'] as double,
-      gustMph: map['gustMph'] as double,
-      gustKph: map['gustKph'] as double,
-      airQuality: AirQuality.fromMap(map['airQuality'] as Map<String, dynamic>),
-    );
-  }
+  factory Current.fromMap(Map<String, dynamic> data) => Current(
+        lastUpdatedEpoch: data['last_updated_epoch'] as int?,
+        lastUpdated: data['last_updated'] as String?,
+        tempC: data['temp_c'] as double?,
+        tempF: (data['temp_f'] as num?)?.toDouble(),
+        isDay: data['is_day'] as int?,
+        condition: data['condition'] == null
+            ? null
+            : Condition.fromMap(data['condition'] as Map<String, dynamic>),
+        windMph: (data['wind_mph'] as num?)?.toDouble(),
+        windKph: data['wind_kph'] as double?,
+        windDegree: data['wind_degree'] as int?,
+        windDir: data['wind_dir'] as String?,
+        pressureMb: data['pressure_mb'] as double?,
+        pressureIn: (data['pressure_in'] as num?)?.toDouble(),
+        precipMm: data['precip_mm'] as double?,
+        precipIn: data['precip_in'] as double?,
+        humidity: data['humidity'] as int?,
+        cloud: data['cloud'] as int?,
+        feelslikeC: (data['feelslike_c'] as num?)?.toDouble(),
+        feelslikeF: (data['feelslike_f'] as num?)?.toDouble(),
+        visKm: data['vis_km'] as double?,
+        visMiles: data['vis_miles'] as double?,
+        uv: data['uv'] as double?,
+        gustMph: (data['gust_mph'] as num?)?.toDouble(),
+        gustKph: (data['gust_kph'] as num?)?.toDouble(),
+        airQuality: data['air_quality'] == null
+            ? null
+            : AirQuality.fromMap(data['air_quality'] as Map<String, dynamic>),
+      );
 
   String toJson() => json.encode(toMap());
 

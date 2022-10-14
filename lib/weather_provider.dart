@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/controller/api_services.dart';
-import 'package:weather_app/model/current_weather.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart' as loc;
 import 'package:weather_app/model/weekend_weather.dart';
@@ -45,7 +44,7 @@ class Varses extends ChangeNotifier {
 
   void addWidget(String nameCity) {
     listOfHistory[nameCity.toLowerCase()] = InfWidget(
-      temperature: weekendWeather?.current!.tempC!.toDouble() ?? 0,
+      temperature: weekendWeather?.current?.tempC!.toDouble() ?? 0,
       locationName: '${weekendWeather!.location!.name}',
       localTime: '${weekendWeather!.location!.localtime}',
       image: 'http:${weekendWeather!.current!.condition!.icon}',

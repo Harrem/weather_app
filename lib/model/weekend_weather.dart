@@ -6,14 +6,23 @@ import 'current.dart';
 import 'forecast.dart';
 
 class WeekendWeather {
-  Location location;
-  Current current;
-  Forecast forecast;
+  Location? location;
+  Current? current;
+  Forecast? forecast;
   WeekendWeather({
     required this.location,
     required this.current,
     required this.forecast,
   });
+
+  // factory WeekendWeather.fromJson(Map<String, dynamic> json) {
+  //   var l =
+  //       json['location'] != null ? Location.fromJson(json['location']) : null;
+  //   var c = json['current'] != null ? Current.fromJson(json['current']) : null;
+  //   var f =
+  //       json['forecast'] != null ? Forecast.fromJson(json['forecast']) : null;
+  //   return WeekendWeather(location: l!, current: c!, forecast: f!);
+  // }
 
   WeekendWeather copyWith({
     Location? location,
@@ -29,19 +38,23 @@ class WeekendWeather {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'location': location.toMap(),
-      'current': current.toMap(),
-      'forecast': forecast.toMap(),
+      'location': location?.toMap(),
+      'current': current?.toMap(),
+      'forecast': forecast?.toMap(),
     };
   }
 
-  factory WeekendWeather.fromMap(Map<String, dynamic> map) {
-    return WeekendWeather(
-      location: Location.fromMap(map['location'] as Map<String, dynamic>),
-      current: Current.fromMap(map['current'] as Map<String, dynamic>),
-      forecast: Forecast.fromMap(map['forecast'] as Map<String, dynamic>),
-    );
-  }
+  factory WeekendWeather.fromMap(Map<String, dynamic> data) => WeekendWeather(
+        location: data['location'] == null
+            ? null
+            : Location.fromMap(data['location'] as Map<String, dynamic>),
+        current: data['current'] == null
+            ? null
+            : Current.fromMap(data['current'] as Map<String, dynamic>),
+        forecast: data['forecast'] == null
+            ? null
+            : Forecast.fromMap(data['forecast'] as Map<String, dynamic>),
+      );
 
   String toJson() => json.encode(toMap());
 

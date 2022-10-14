@@ -1,9 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+
 import 'forecastday.dart';
 
 class Forecast {
-  List<Forecastday> forecastday;
+  List<Forecastday>? forecastday;
   Forecast({
     required this.forecastday,
   });
@@ -18,17 +21,19 @@ class Forecast {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'forecastday': forecastday.map((x) => x.toMap()).toList(),
+      'forecastday': forecastday?.map((x) => x.toMap()).toList(),
     };
   }
 
   factory Forecast.fromMap(Map<String, dynamic> map) {
     return Forecast(
-      forecastday: List<Forecastday>.from(
-        (map['forecastday'] as List<int>).map<Forecastday>(
-          (x) => Forecastday.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      forecastday: map['forecastday'] != null
+          ? List<Forecastday>.from(
+              (map['forecastday'] as List<dynamic>).map<Forecastday?>(
+                (x) => Forecastday.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : null,
     );
   }
 

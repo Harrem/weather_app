@@ -1,21 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class Location {
-  String name;
-  String region;
-  String country;
-  double lat;
-  double lon;
-  String tzId;
-  int localtimeEpoch;
-  String localtime;
+  String? name;
+  String? region;
+  String? country;
+  double? lat;
+  double? lon;
+  String? tzId;
+  int? localtimeEpoch;
+  String? localtime;
   Location({
     required this.name,
     required this.region,
     required this.country,
     required this.lat,
     required this.lon,
-    required this.tzId,
+    this.tzId,
     required this.localtimeEpoch,
     required this.localtime,
   });
@@ -57,14 +58,15 @@ class Location {
 
   factory Location.fromMap(Map<String, dynamic> map) {
     return Location(
-      name: map['name'] as String,
-      region: map['region'] as String,
-      country: map['country'] as String,
-      lat: map['lat'] as double,
-      lon: map['lon'] as double,
-      tzId: map['tzId'] as String,
-      localtimeEpoch: map['localtimeEpoch'] as int,
-      localtime: map['localtime'] as String,
+      name: map['name'] != null ? map['name'] as String : null,
+      region: map['region'] != null ? map['region'] as String : null,
+      country: map['country'] != null ? map['country'] as String : null,
+      lat: map['lat'] != null ? map['lat'] as double : null,
+      lon: map['lon'] != null ? map['lon'] as double : null,
+      tzId: map['tzId'] != null ? map['tzId'] as String : null,
+      localtimeEpoch:
+          map['localtimeEpoch'] != null ? map['localtimeEpoch'] as int : null,
+      localtime: map['localtime'] != null ? map['localtime'] as String : null,
     );
   }
 

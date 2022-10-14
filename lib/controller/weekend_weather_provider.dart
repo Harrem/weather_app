@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/controller/api_services.dart';
-import 'package:weather_app/model/weekend_weather.dart';
+import '../model/weekend_weather.dart';
+import 'api_services.dart';
 
 class WeekendWeatherProvider extends ChangeNotifier {
   late WeekendWeather weekendWeather;
-  late List<Forecastday> forecastdays;
   ApiServices weatherApi = ApiServices();
 
-  WeekendWeatherProvider() {
-    getWeekendWeather();
-  }
-
-  Future<void> getWeekendWeather() async {
+  Future<WeekendWeather> getWeekendWeather() async {
     weekendWeather = await weatherApi.getWeekendWeather();
+    // .onError((error, stackTrace) => Future.error(error.toString()));
+    return weekendWeather;
   }
 }
