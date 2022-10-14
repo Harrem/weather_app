@@ -3,6 +3,7 @@ import 'package:weather_app/controller/api_services.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart' as loc;
+import 'package:weather_app/model/weekend_weather.dart';
 import 'package:weather_app/view/screens/home_screen.dart';
 import 'package:weather_app/view/screens/search_screen.dart';
 import 'package:weather_app/view/screens/setting_screen.dart';
@@ -16,7 +17,8 @@ bool isLocationOn = false;
 String mainCountry = 'London';
 
 class Varses extends ChangeNotifier {
-  Post? post;
+  // Post? post;
+  WeekendWeather? weekendWeather;
   String letPermission = '';
   int screenHome = 0;
   List pageScreens = [
@@ -43,10 +45,10 @@ class Varses extends ChangeNotifier {
 
   void addWidget(String nameCity) {
     listOfHistory[nameCity.toLowerCase()] = InfWidget(
-      temperature: post?.current.tempC.toDouble() ?? 0,
-      locationName: '${post?.location.name}',
-      localTime: '${post?.location.localtime}',
-      image: 'http:${post?.current.condition.icon}',
+      temperature: weekendWeather?.current!.tempC!.toDouble() ?? 0,
+      locationName: '${weekendWeather!.location!.name}',
+      localTime: '${weekendWeather!.location!.localtime}',
+      image: 'http:${weekendWeather!.current!.condition!.icon}',
     );
     notifyListeners();
   }

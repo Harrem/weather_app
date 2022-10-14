@@ -71,7 +71,7 @@ class SearchScreen extends StatelessWidget {
                               final response = await apiServices
                                   .getJsons(cityController.text);
 
-                              varsProvider.post = response;
+                              varsProvider.weekendWeather = response;
 
                               varsProvider.addWidget(cityController.text);
                             },
@@ -102,7 +102,7 @@ class SearchScreen extends StatelessWidget {
                                         GetLocation.lat, GetLocation.lon);
 
                                 ApiServices apiServices = ApiServices();
-                                varsProvider.post = await apiServices
+                                varsProvider.weekendWeather = await apiServices
                                     .getJsons('${placemarks[0].locality}');
 
                                 varsProvider

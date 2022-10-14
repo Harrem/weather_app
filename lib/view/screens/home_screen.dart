@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:weather_app/controller/api_services.dart';
-import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/model/weekend_weather.dart';
 
 import '../../controller/date_time_formatter.dart';
@@ -17,8 +16,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Post? post;
   WeekendWeather? weekendWeather;
+  Current? current;
   List<Forecastday>? forecastday;
   int hour = DateTime.now().hour;
   @override
@@ -28,15 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void getData() async {
-    post = await ApiServices().getCurrentWeather();
     weekendWeather = await ApiServices().getWeekendWeather();
     if (weekendWeather != null) {
-      forecastday = weekendWeather?.forecast?.forecastday;
+      current = weekendWeather!.current!;
+      forecastday = weekendWeather!.forecast!.forecastday;
+      // debugPrint(forecastday!.toString());
+      hour = DateTime.now().hour;
+      if (hour > 20) {}
+      debugPrint(forecastday!.first.hour!.length.toString());
+      debugPrint(DateTime.now().hour.toString());
     }
-    debugPrint(DateTime.now().hour.toString());
-    debugPrint(
-        DateTime.fromMillisecondsSinceEpoch(forecastday![2].hour![7].timeEpoch!)
-            .toIso8601String());
   }
 
   @override
@@ -111,53 +111,62 @@ class _HomeScreenState extends State<HomeScreen> {
                       shrinkWrap: true,
                       itemCount: 4,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: ((context, index) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: SizedBox(
-                              width: 70,
-                              child: Card(
-                                color: const Color.fromARGB(255, 107, 38, 240),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  side: BorderSide.none,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/weather_icon_set/${forecastday != null ? forecastday![0].hour![index].condition!.text!.toLowerCase() : "Error"}"
-                                      ".svg",
-                                      width: 40,
+                      itemBuilder: ((context, index) {
+                        int nextHours = hour + index;
+                        int nextHourDay = 0;
+                        if (nextHourDay >= 23) {
+                          nextHourDay = 1;
+                          nextHours = 0;
+                        } else {}
+
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: SizedBox(
+                            width: 70,
+                            child: Card(
+                              color: const Color.fromARGB(255, 107, 38, 240),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                side: BorderSide.none,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/weather_icon_set/${forecastday != null ? forecastday![0].hour![index].condition!.text!.toLowerCase() : 'Error'}"
+                                    ".svg",
+                                    width: 40,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    forecastday != null
+                                        ? forecastday![0]
+                                            .hour![index]
+                                            .time!
+                                            .split(" ")[1]
+                                        : "",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey[300],
                                     ),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      forecastday != null
-                                          ? forecastday![0]
-                                              .hour![index]
-                                              .time!
-                                              .split(" ")[1]
-                                          : "",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey[300],
-                                      ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    forecastday != null
+                                        ? "${forecastday![nextHourDay].hour![nextHours].tempC!.round()}°C"
+                                        : 'null',
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
                                     ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      forecastday != null
-                                          ? "${forecastday![0].hour![index].tempC!.round()}°C"
-                                          : '',
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                  )
+                                ],
                               ),
                             ),
-                          )),
+                          ),
+                        );
+                      }),
                     ),
                   ),
                   const Divider(),
@@ -227,8 +236,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          FutureBuilder<Post?>(
-                              future: ApiServices().getCurrentWeather(),
+                          FutureBuilder<WeekendWeather?>(
+                              future: ApiServices().getWeekendWeather(),
                               builder: ((context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
@@ -238,13 +247,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return const Text(
                                       "error while fetching data");
                                 }
-                                post = snapshot.data!;
+                                weekendWeather = snapshot.data!;
                                 return Column(
                                   children: [
                                     Container(
                                       alignment: Alignment.topLeft,
                                       child: Text(
-                                        post!.location.name,
+                                        weekendWeather!.location!.name ??
+                                            'error',
                                         style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
@@ -265,13 +275,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                       ),
                                       child: SvgPicture.asset(
-                                        "assets/weather_icon_set/${post!.current.condition.text.trim().toLowerCase()}.svg",
+                                        current!.isDay == 1
+                                            ? "assets/weather_icon_set/${weekendWeather!.current!.condition!.text!.trim().toLowerCase()}.svg"
+                                            : "assets/weather_icon_set/${weekendWeather!.current!.condition!.text!.trim().toLowerCase()}_night.svg",
                                         width: 170,
                                       ),
                                     ),
                                     const SizedBox(height: 30),
                                     GradientText(
-                                      post!.current.condition.text,
+                                      weekendWeather!.current!.condition!.text!,
                                       style: const TextStyle(fontSize: 40),
                                       gradient: const LinearGradient(
                                           begin: Alignment.topCenter,
@@ -297,15 +309,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               const SizedBox(height: 5),
                                               Text(
-                                                  post != null
-                                                      ? post!.current.windKph
-                                                          .round()
-                                                          .toString()
-                                                      : "N/A",
-                                                  style: const TextStyle(
-                                                      fontSize: 25,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
+                                                weekendWeather != null
+                                                    ? weekendWeather!
+                                                        .current!.windKph!
+                                                        .round()
+                                                        .toString()
+                                                    : "N/A",
+                                                style: const TextStyle(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
                                             ],
                                           ),
                                           const VerticalDivider(
@@ -324,8 +338,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               const SizedBox(height: 5),
                                               Text(
-                                                post != null
-                                                    ? "${post!.current.tempC.round()}°C"
+                                                weekendWeather != null
+                                                    ? "${weekendWeather!.current!.tempC!.round()}°C"
                                                     : "N/A",
                                                 style: const TextStyle(
                                                   fontSize: 25,
@@ -348,8 +362,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               const SizedBox(height: 5),
                                               Text(
-                                                post != null
-                                                    ? "${post!.current.humidity.round()}%"
+                                                weekendWeather != null
+                                                    ? "${weekendWeather!.current!.humidity!.round()}%"
                                                     : "N/A",
                                                 style: const TextStyle(
                                                   fontSize: 25,
