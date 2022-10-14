@@ -2,46 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:weather_app/controller/api_services.dart';
+import 'package:weather_app/controller/weekend_weather_provider.dart';
 import 'package:weather_app/model/weekend_weather.dart';
 
 import '../../controller/date_time_formatter.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  WeekendWeather? weekendWeather;
-  Current? current;
-  List<Forecastday>? forecastday;
-  int hour = DateTime.now().hour;
-  @override
-  void initState() {
-    getData();
-    super.initState();
-  }
-
-  void getData() async {
-    weekendWeather = await ApiServices().getWeekendWeather();
-    if (weekendWeather != null) {
-      current = weekendWeather!.current!;
-      forecastday = weekendWeather!.forecast!.forecastday;
-      // debugPrint(forecastday!.toString());
-      hour = DateTime.now().hour;
-      if (hour > 20) {}
-      debugPrint(forecastday!.first.hour!.length.toString());
-      debugPrint(DateTime.now().hour.toString());
-    }
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+  // void getData() async {
+  //   weekendWeather = await ApiServices().getWeekendWeather();
+  //   if (weekendWeather != null) {
+  //     current = weekendWeather!.current!;
+  //     forecastday = weekendWeather!.forecast!.forecastday;
+  //     // debugPrint(forecastday!.toString());
+  //     hour = DateTime.now().hour;
+  //     if (hour > 20) {}
+  //     debugPrint(forecastday!.first.hour!.length.toString());
+  //     debugPrint(DateTime.now().hour.toString());
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    getData();
+    final wProvider = Provider.of<WeekendWeatherProvider>(context);
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -112,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: 4,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: ((context, index) {
-                        int nextHours = hour + index;
+                        int nextHours = DateTime.now().hour + index;
                         int nextHourDay = 0;
                         if (nextHourDay >= 23) {
                           nextHourDay = 1;
@@ -146,14 +133,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                           MainAxisAlignment.center,
                                       children: [
                                         SvgPicture.asset(
-                                          "assets/weather_icon_set/${forecastday != null ? forecastday![0].hour![index].condition!.text!.toLowerCase() : 'Error'}"
+                                          "assets/weather_icon_set/${wProvider.weekendWeather!.forecast!.forecastday != null ? wProvider.weekendWeather!.forecast!.forecastday![0].hour![index].condition!.text!.toLowerCase() : 'Error'}"
                                           ".svg",
                                           width: 40,
                                         ),
                                         const SizedBox(height: 10),
                                         Text(
-                                          forecastday != null
-                                              ? forecastday![0]
+                                          wProvider.weekendWeather!.forecast!
+                                                      .forecastday !=
+                                                  null
+                                              ? wProvider
+                                                  .weekendWeather!
+                                                  .forecast!
+                                                  .forecastday![0]
                                                   .hour![index]
                                                   .time!
                                                   .split(" ")[1]
@@ -165,8 +157,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
-                                          forecastday != null
-                                              ? "${forecastday![nextHourDay].hour![nextHours].tempC!.round()}°C"
+                                          wProvider.weekendWeather!.forecast!
+                                                      .forecastday !=
+                                                  null
+                                              ? "${wProvider.weekendWeather!.forecast!.forecastday![nextHourDay].hour![nextHours].tempC!.round()}°C"
                                               : 'null',
                                           style: const TextStyle(
                                             fontSize: 18,
@@ -189,7 +183,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount:
-                              forecastday != null ? forecastday!.length : 1,
+                              wProvider.weekendWeather!.forecast!.forecastday !=
+                                      null
+                                  ? wProvider.weekendWeather!.forecast!
+                                      .forecastday!.length
+                                  : 1,
                           itemBuilder: ((context, index) => SizedBox(
                                 child: SizedBox(
                                   child: Card(
@@ -208,12 +206,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           Text(
-                                            forecastday != null
+                                            wProvider.weekendWeather!.forecast!
+                                                        .forecastday !=
+                                                    null
                                                 ? DateFormat('EEEE').format(
-                                                    DateTime.parse(
-                                                        forecastday![index]
-                                                            .hour![12]
-                                                            .time!))
+                                                    DateTime.parse(wProvider
+                                                        .weekendWeather!
+                                                        .forecast!
+                                                        .forecastday![index]
+                                                        .hour![12]
+                                                        .time!))
                                                 : "Mondy",
                                             style: const TextStyle(
                                                 color: Colors.white),
@@ -249,24 +251,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          FutureBuilder<WeekendWeather?>(
-                              future: ApiServices().getWeekendWeather(),
+                          FutureBuilder(
+                              future: wProvider.getWeekendWeather(),
                               builder: ((context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
                                   return const CircularProgressIndicator();
                                 }
-                                if (snapshot.data == null) {
+                                if (snapshot.hasError) {
                                   return const Text(
                                       "error while fetching data");
                                 }
-                                weekendWeather = snapshot.data!;
                                 return Column(
                                   children: [
                                     Container(
                                       alignment: Alignment.topLeft,
                                       child: Text(
-                                        weekendWeather!.location!.name ??
+                                        wProvider.weekendWeather!.location!
+                                                .name ??
                                             'error',
                                         style: const TextStyle(
                                             fontSize: 20,
@@ -288,15 +290,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                       ),
                                       child: SvgPicture.asset(
-                                        current!.isDay == 1
-                                            ? "assets/weather_icon_set/${weekendWeather!.current!.condition!.text!.trim().toLowerCase()}.svg"
-                                            : "assets/weather_icon_set/${weekendWeather!.current!.condition!.text!.trim().toLowerCase()}_night.svg",
+                                        wProvider.weekendWeather!.current!
+                                                    .isDay ==
+                                                1
+                                            ? "assets/weather_icon_set/${wProvider.weekendWeather!.current!.condition!.text!.trim().toLowerCase()}.svg"
+                                            : "assets/weather_icon_set/${wProvider.weekendWeather!.current!.condition!.text!.trim().toLowerCase()}_night.svg",
                                         width: 170,
                                       ),
                                     ),
                                     const SizedBox(height: 30),
                                     GradientText(
-                                      weekendWeather!.current!.condition!.text!,
+                                      wProvider.weekendWeather!.current!
+                                          .condition!.text!,
                                       style: const TextStyle(fontSize: 40),
                                       gradient: const LinearGradient(
                                           begin: Alignment.topCenter,
@@ -322,12 +327,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               const SizedBox(height: 5),
                                               Text(
-                                                weekendWeather != null
-                                                    ? weekendWeather!
-                                                        .current!.windKph!
-                                                        .round()
-                                                        .toString()
-                                                    : "N/A",
+                                                wProvider.weekendWeather!
+                                                    .current!.windKph!
+                                                    .round()
+                                                    .toString(),
                                                 style: const TextStyle(
                                                   fontSize: 25,
                                                   fontWeight: FontWeight.bold,
@@ -351,9 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               const SizedBox(height: 5),
                                               Text(
-                                                weekendWeather != null
-                                                    ? "${weekendWeather!.current!.tempC!.round()}°C"
-                                                    : "N/A",
+                                                "${wProvider.weekendWeather!.current!.tempC!.round()}°C",
                                                 style: const TextStyle(
                                                   fontSize: 25,
                                                   fontWeight: FontWeight.bold,
@@ -375,9 +376,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               const SizedBox(height: 5),
                                               Text(
-                                                weekendWeather != null
-                                                    ? "${weekendWeather!.current!.humidity!.round()}%"
-                                                    : "N/A",
+                                                "${wProvider.weekendWeather!.current!.humidity!.round()}%",
                                                 style: const TextStyle(
                                                   fontSize: 25,
                                                   fontWeight: FontWeight.bold,

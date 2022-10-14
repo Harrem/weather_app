@@ -1,12 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:http/http.dart';
-import 'package:weather_app/model/current_weather.dart';
-import 'package:weather_app/model/weekend_weather.dart';
-
 import '../weather_provider.dart';
+import 'package:weather_app/model/weekend_weather.dart';
 
 class ApiServices {
   String apiKey = "902833916c454c328aa105039221706";
@@ -23,40 +19,20 @@ class ApiServices {
     }
   }
 
-  // Future<Post?> getCurrentWeather() async {
-  //   Post? forecast;
-  //   final url =
-  //       "http://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=${localStorage.read('mainCountry')}&days=7&aqi=yes&alerts=no";
-
-  //   final Response res;
-  //   try {
-  //     res = await get(Uri.parse(url)).catchError((e) {
-  //       debugPrint("an error occured: $e");
-  //     });
-  //     forecast = Post.fromJson(json.decode(res.body));
-  //   } on SocketException catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-
-  //   return forecast;
-  // }
-
-  Future<WeekendWeather?> getWeekendWeather() async {
-    WeekendWeather? weekendWeather;
+  Future<WeekendWeather> getWeekendWeather() async {
+    late WeekendWeather weekendWeather;
     final url =
         "https://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=${localStorage.read('mainCountry')}&days=7&aqi=yes&alerts=no";
 
-    final Response res;
     try {
-      res = await get(Uri.parse(url)).catchError((e) {
-        debugPrint("an error occured: $e");
-        return Future.error(e);
-      });
+      final res = await get(Uri.parse(url));
       weekendWeather = WeekendWeather.fromJson(json.decode(res.body));
     } on SocketException catch (e) {
-      Future.error("Network Errorr: $e");
+      return Future.error("Network Errorr: $e");
+    } catch (e) {
+      return Future.error(e);
     }
 
-    return weekendWeather!;
+    return weekendWeather;
   }
 }
