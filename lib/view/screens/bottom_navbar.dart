@@ -26,17 +26,17 @@ class PageState extends StatelessWidget {
                 return Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                     margin: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(25),
                         color: Colors.white),
                     width: 300,
                     child: GNav(
                         tabBackgroundColor:
-                            const Color.fromARGB(255, 240, 216, 255),
-                        activeColor: Colors.deepPurple[400],
+                            const Color.fromARGB(255, 234, 234, 237),
+                        activeColor: const Color.fromARGB(255, 100, 110, 150),
                         color: Colors.grey[700],
                         padding: const EdgeInsets.all(12),
                         duration: const Duration(milliseconds: 200),
@@ -45,17 +45,17 @@ class PageState extends StatelessWidget {
                         tabs: const [
                           GButton(
                             gap: 10,
-                            icon: CupertinoIcons.home,
+                            icon: Iconsax.home,
                             text: 'Home',
                           ),
                           GButton(
                             gap: 10,
-                            icon: CupertinoIcons.search,
+                            icon: Iconsax.search_normal4,
                             text: 'Search',
                           ),
                           GButton(
                             gap: 10,
-                            icon: CupertinoIcons.settings,
+                            icon: Iconsax.settings,
                             text: 'Settings',
                           ),
                         ],
