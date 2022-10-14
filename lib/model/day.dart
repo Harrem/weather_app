@@ -113,43 +113,29 @@ class Day {
     };
   }
 
-  factory Day.fromMap(Map<String, dynamic> map) {
-    return Day(
-      maxtempC: map['maxtempC'] != null ? map['maxtempC'] as double : null,
-      maxtempF: map['maxtempF'] != null ? map['maxtempF'] as double : null,
-      mintempC: map['mintempC'] != null ? map['mintempC'] as double : null,
-      mintempF: map['mintempF'] != null ? map['mintempF'] as double : null,
-      avgtempC: map['avgtempC'] != null ? map['avgtempC'] as double : null,
-      avgtempF: map['avgtempF'] != null ? map['avgtempF'] as double : null,
-      maxwindMph:
-          map['maxwindMph'] != null ? map['maxwindMph'] as double : null,
-      maxwindKph:
-          map['maxwindKph'] != null ? map['maxwindKph'] as double : null,
-      totalprecipMm:
-          map['totalprecipMm'] != null ? map['totalprecipMm'] as double : null,
-      totalprecipIn:
-          map['totalprecipIn'] != null ? map['totalprecipIn'] as double : null,
-      avgvisKm: map['avgvisKm'] != null ? map['avgvisKm'] as double : null,
-      avgvisMiles:
-          map['avgvisMiles'] != null ? map['avgvisMiles'] as double : null,
-      avghumidity:
-          map['avghumidity'] != null ? map['avghumidity'] as double : null,
-      dailyWillItRain:
-          map['dailyWillItRain'] != null ? map['dailyWillItRain'] as int : null,
-      dailyChanceOfRain: map['dailyChanceOfRain'] != null
-          ? map['dailyChanceOfRain'] as int
-          : null,
-      dailyWillItSnow:
-          map['dailyWillItSnow'] != null ? map['dailyWillItSnow'] as int : null,
-      dailyChanceOfSnow: map['dailyChanceOfSnow'] != null
-          ? map['dailyChanceOfSnow'] as int
-          : null,
-      condition: map['condition'] != null
-          ? Condition.fromMap(map['condition'] as Map<String, dynamic>)
-          : null,
-      uv: map['uv'] != null ? map['uv'] as double : null,
-    );
-  }
+  factory Day.fromMap(Map<String, dynamic> data) => Day(
+        maxtempC: (data['maxtemp_c'] as num?)?.toDouble(),
+        maxtempF: (data['maxtemp_f'] as num?)?.toDouble(),
+        mintempC: (data['mintemp_c'] as num?)?.toDouble(),
+        mintempF: (data['mintemp_f'] as num?)?.toDouble(),
+        avgtempC: (data['avgtemp_c'] as num?)?.toDouble(),
+        avgtempF: (data['avgtemp_f'] as num?)?.toDouble(),
+        maxwindMph: (data['maxwind_mph'] as num?)?.toDouble(),
+        maxwindKph: (data['maxwind_kph'] as num?)?.toDouble(),
+        totalprecipMm: data['totalprecip_mm'] as double?,
+        totalprecipIn: (data['totalprecip_in'] as num?)?.toDouble(),
+        avgvisKm: (data['avgvis_km'] as num?)?.toDouble(),
+        avgvisMiles: data['avgvis_miles'] as double?,
+        avghumidity: data['avghumidity'] as double?,
+        dailyWillItRain: data['daily_will_it_rain'] as int?,
+        dailyChanceOfRain: data['daily_chance_of_rain'] as int?,
+        dailyWillItSnow: data['daily_will_it_snow'] as int?,
+        dailyChanceOfSnow: data['daily_chance_of_snow'] as int?,
+        condition: data['condition'] == null
+            ? null
+            : Condition.fromMap(data['condition'] as Map<String, dynamic>),
+        uv: data['uv'] as double?,
+      );
 
   String toJson() => json.encode(toMap());
 
