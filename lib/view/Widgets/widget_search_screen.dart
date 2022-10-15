@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/weather_provider.dart';
+import 'package:weather_app/providers/search_provider.dart';
 
 class InfWidget extends StatelessWidget {
-  const InfWidget(
-      {Key? key,
-      required this.temperature,
-      required this.locationName,
-      required this.localTime,
-      required this.image})
-      : super(key: key);
+  const InfWidget({
+    Key? key,
+    required this.temperature,
+    required this.locationName,
+    required this.localTime,
+    //   required this.image
+  }) : super(key: key);
 
   final double temperature;
   final String locationName;
   final String localTime;
-  final String image;
+//  final String image;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -36,7 +36,7 @@ class InfWidget extends StatelessWidget {
                   )
                 : Text('${((temperature * 1.8) + 32).toStringAsFixed(1)} F°',
                     style: const TextStyle(fontSize: 20, color: Colors.white)),
-            Image.network(image),
+            //  Image.network(image),
             Center(
               child: Text(
                 localTime,
