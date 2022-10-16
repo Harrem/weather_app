@@ -46,6 +46,9 @@ class Varses extends ChangeNotifier {
       temperature: weekendWeather?.current?.tempC!.toDouble() ?? 0,
       locationName: '${weekendWeather!.location!.name}',
       localTime: '${weekendWeather!.location!.localtime}',
+      image:
+          "assets/weather_icon_set/${weekendWeather?.current!.condition!.text.toLowerCase() ?? "Error"}"
+          ".svg",
       //  image: 'http:${weekendWeather!.current!.condition!.icon}',
     );
     notifyListeners();
