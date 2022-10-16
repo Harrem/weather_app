@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/providers/weather_provider.dart';
+import 'package:weather_app/theme/custom_theme.dart';
 import 'package:weather_app/view/screens/bottom_navbar.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:weather_app/providers/search_provider.dart';
@@ -23,9 +24,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: 'nrt',
-        ),
+        theme: CustomTheme.lightTheme,
         home: const PageState(),
       ),
     );

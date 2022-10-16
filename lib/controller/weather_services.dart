@@ -7,7 +7,7 @@ import 'package:dio_http_cache/dio_http_cache.dart';
 
 class ApiServices {
   String apiKey = "902833916c454c328aa105039221706";
-  Future<WeekendWeather> getWeather(String cityName) async {
+  Future<WeekendWeather?> getWeather(String cityName) async {
     Dio dio = Dio();
     WeekendWeather? weekendWeather;
 
