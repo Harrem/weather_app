@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
@@ -59,22 +58,25 @@ class SearchScreen extends StatelessWidget {
                 ),
                 Consumer<Varses>(
                   builder: (context, value, child) {
-                    return SizedBox(
-                      child: CarouselSlider.builder(
+                    return Container(
+                      padding: EdgeInsets.all(13),
+                      height: MediaQuery.of(context).size.height / 1.42,
+                      child: ListView.builder(
                         itemCount: varsProvider.listOfHistory.length,
-                        itemBuilder: (context, i, realIndex) {
-                          return SizedBox(
-                            child: value
-                                .reverseMap(value.listOfHistory)
-                                .values
-                                .elementAt(i),
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 172,
+                                child: value
+                                    .reverseMap(value.listOfHistory)
+                                    .values
+                                    .elementAt(index),
+                              ),
+                              Divider()
+                            ],
                           );
                         },
-                        options: CarouselOptions(
-                          height: 170,
-                          viewportFraction: 0.85,
-                          enableInfiniteScroll: false,
-                        ),
                       ),
                     );
                   },

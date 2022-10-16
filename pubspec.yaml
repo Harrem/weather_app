@@ -39,7 +39,6 @@ dependencies:
   geocoding: ^2.0.4
   location: ^4.4.0
   provider: ^6.0.3
-  carousel_slider: ^4.1.1
   intl: any
   get_storage: ^2.0.3
   iconsax: ^0.0.8
