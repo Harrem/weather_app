@@ -22,8 +22,8 @@ class SearchScreen extends StatelessWidget {
             gradient: LinearGradient(
           end: Alignment.topCenter,
           colors: [
-            Color.fromARGB(255, 143, 224, 255),
-            Color.fromARGB(255, 113, 200, 235),
+            Color.fromARGB(255, 250, 250, 255),
+            Color.fromARGB(255, 236, 243, 255),
           ],
         )),
         child: SafeArea(
