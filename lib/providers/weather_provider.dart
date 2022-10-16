@@ -8,8 +8,8 @@ class WeekendWeatherProvider extends ChangeNotifier {
   ApiServices weatherApi = ApiServices();
 
   Future<WeekendWeather> getWeekendWeather() async {
-    weekendWeather =
-        await weatherApi.getWeather(localStorage.read('mainCountry'));
+    weekendWeather = await weatherApi
+        .getWeather(localStorage.read('mainCountry') ?? "london");
     // .onError((error, stackTrace) => Future.error(error.toString()));
     return weekendWeather;
   }
