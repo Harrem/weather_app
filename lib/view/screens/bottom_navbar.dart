@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:weather_app/weather_provider.dart';
+import 'package:weather_app/providers/search_provider.dart';
 
 class PageState extends StatelessWidget {
   const PageState({Key? key}) : super(key: key);

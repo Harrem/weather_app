@@ -2,9 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/controller/api_services.dart';
-import 'package:weather_app/controller/get_location.dart';
-import 'package:weather_app/weather_provider.dart';
+import 'package:weather_app/controller/weather_services.dart';
+import 'package:weather_app/controller/location_services.dart';
+import 'package:weather_app/providers/search_provider.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -69,7 +69,7 @@ class SearchScreen extends StatelessWidget {
                             child: const Icon(Icons.search),
                             onTap: () async {
                               final response = await apiServices
-                                  .getJsons(cityController.text);
+                                  .getWeather(cityController.text);
 
                               varsProvider.weekendWeather = response;
 
@@ -103,7 +103,7 @@ class SearchScreen extends StatelessWidget {
 
                                 ApiServices apiServices = ApiServices();
                                 varsProvider.weekendWeather = await apiServices
-                                    .getJsons('${placemarks[0].locality}');
+                                    .getWeather('${placemarks[0].locality}');
 
                                 varsProvider
                                     .addWidget(placemarks[0].locality ?? '');

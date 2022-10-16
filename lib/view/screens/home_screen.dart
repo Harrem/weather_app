@@ -4,8 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:weather_app/controller/api_services.dart';
-import 'package:weather_app/controller/weekend_weather_provider.dart';
+import 'package:weather_app/providers/weather_provider.dart';
 
 import '../../controller/date_time_formatter.dart';
 

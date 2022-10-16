@@ -31,7 +31,6 @@ dependencies:
     sdk: flutter
   sliding_up_panel: ^2.0.0+1
   cupertino_icons: ^1.0.2
-  http: ^0.13.4
   google_nav_bar: ^5.0.6
   toggle_switch: ^2.0.1
   flutter_svg: any
@@ -44,6 +43,7 @@ dependencies:
   intl: any
   get_storage: ^2.0.3
   iconsax: ^0.0.8
+  dio_http_cache: ^0.3.0
 
 
 

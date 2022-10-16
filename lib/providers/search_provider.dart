@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/controller/api_services.dart';
+import 'package:weather_app/controller/weather_services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart' as loc;
 import 'package:weather_app/model/weekend_weather.dart';
@@ -7,7 +7,7 @@ import 'package:weather_app/view/screens/home_screen.dart';
 import 'package:weather_app/view/screens/search_screen.dart';
 import 'package:weather_app/view/screens/setting_screen.dart';
 
-import 'view/Widgets/widget_search_screen.dart';
+import '../view/Widgets/widget_search_screen.dart';
 
 final localStorage = GetStorage();
 final loc.Location location = loc.Location();
@@ -16,7 +16,6 @@ bool isLocationOn = false;
 String mainCountry = 'London';
 
 class Varses extends ChangeNotifier {
-  // Post? post;
   WeekendWeather? weekendWeather;
   String letPermission = '';
   int screenHome = 0;
@@ -47,7 +46,7 @@ class Varses extends ChangeNotifier {
       temperature: weekendWeather?.current?.tempC!.toDouble() ?? 0,
       locationName: '${weekendWeather!.location!.name}',
       localTime: '${weekendWeather!.location!.localtime}',
-      image: 'http:${weekendWeather!.current!.condition!.icon}',
+      //  image: 'http:${weekendWeather!.current!.condition!.icon}',
     );
     notifyListeners();
   }
