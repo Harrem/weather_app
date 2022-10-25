@@ -56,7 +56,7 @@ class SearchScreen extends StatelessWidget {
                 Consumer<Varses>(
                   builder: (context, value, child) {
                     return Container(
-                      padding: EdgeInsets.all(13),
+                      padding: const EdgeInsets.all(13),
                       height: MediaQuery.of(context).size.height / 1.32,
                       child: ListView.builder(
                         itemCount: varsProvider.listOfHistory.length,
@@ -70,7 +70,7 @@ class SearchScreen extends StatelessWidget {
                                     .values
                                     .elementAt(index),
                               ),
-                              Divider()
+                              const Divider()
                             ],
                           );
                         },
