@@ -21,154 +21,203 @@ class InfWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextStyle subHeading =
         TextStyle(color: Colors.deepPurple[100], fontSize: 12);
-    return Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-        color: const Color.fromARGB(255, 107, 38, 238),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Location",
-                    style: subHeading,
-                  ),
-                  SizedBox(
-                    width: 230,
-                    child: Text(
-                      locationName,
-                      style: const TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return Center(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                height: 200,
+                width: 320,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Text(
+                        "Set to defualt location",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Temp", style: subHeading),
-                          localStorage.read('tempratureType') == true
-                              ? Text(
-                                  '${temperature.round()} C°',
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )
-                              : Text(
-                                  '${((temperature * 1.8) + 32).round()} F°',
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                        ],
-                      ),
-                      const VerticalDivider(
-                        color: Colors.white,
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Wind", style: subHeading),
-                          Text(
-                            wind.round().toString(),
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const VerticalDivider(
-                        color: Colors.white,
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Wind", style: subHeading),
-                          Text(
-                            wind.round().toString(),
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text("Dismiss"),
+                        ),
+                        const VerticalDivider(),
+                        ElevatedButton(
+                            onPressed: () {
+                              localStorage.write("mainCountry", locationName);
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Ok"))
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    image,
-                    width: 90,
-                  ),
-                ],
-              ),
+            );
+          },
+        );
+      },
+      child: Card(
+          elevation: 0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+          color: const Color.fromARGB(255, 107, 38, 238),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Location",
+                      style: subHeading,
+                    ),
+                    SizedBox(
+                      width: 230,
+                      child: Text(
+                        locationName,
+                        style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Temp", style: subHeading),
+                            localStorage.read('tempratureType') == true
+                                ? Text(
+                                    '${temperature.round()} C°',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                : Text(
+                                    '${((temperature * 1.8) + 32).round()} F°',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                          ],
+                        ),
+                        const VerticalDivider(
+                          color: Colors.white,
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Wind", style: subHeading),
+                            Text(
+                              wind.round().toString(),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const VerticalDivider(
+                          color: Colors.white,
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Wind", style: subHeading),
+                            Text(
+                              wind.round().toString(),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      image,
+                      width: 90,
+                    ),
+                  ],
+                ),
 
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //     SizedBox(
-              //       width: 100,
-              //       child: TextButton(
-              //         style: ButtonStyle(
-              //             backgroundColor:
-              //                 MaterialStateProperty.all(Colors.white)),
-              //         onPressed: () {
-              //           context.read<Varses>().setMainCountry(locationName);
-              //           context.read<Varses>().navigations(0);
-              //         },
-              //         child: const Text(
-              //           'add',
-              //           style: TextStyle(
-              //             color: Color.fromARGB(255, 98, 8, 234),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     SizedBox(
-              //       width: 100,
-              //       child: TextButton(
-              //         style: ButtonStyle(
-              //             backgroundColor:
-              //                 MaterialStateProperty.all(Colors.white)),
-              //         onPressed: () {
-              //           context.read<Varses>().deleteCountry(locationName);
-              //         },
-              //         child: const Text(
-              //           'Remove',
-              //           style: TextStyle(
-              //             color: Color.fromARGB(255, 98, 8, 234),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-            ],
-          ),
-        ));
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     SizedBox(
+                //       width: 100,
+                //       child: TextButton(
+                //         style: ButtonStyle(
+                //             backgroundColor:
+                //                 MaterialStateProperty.all(Colors.white)),
+                //         onPressed: () {
+                //           context.read<Varses>().setMainCountry(locationName);
+                //           context.read<Varses>().navigations(0);
+                //         },
+                //         child: const Text(
+                //           'add',
+                //           style: TextStyle(
+                //             color: Color.fromARGB(255, 98, 8, 234),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //     SizedBox(
+                //       width: 100,
+                //       child: TextButton(
+                //         style: ButtonStyle(
+                //             backgroundColor:
+                //                 MaterialStateProperty.all(Colors.white)),
+                //         onPressed: () {
+                //           context.read<Varses>().deleteCountry(locationName);
+                //         },
+                //         child: const Text(
+                //           'Remove',
+                //           style: TextStyle(
+                //             color: Color.fromARGB(255, 98, 8, 234),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+              ],
+            ),
+          )),
+    );
   }
 }
