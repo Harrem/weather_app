@@ -40,7 +40,7 @@ class InfWidget extends StatelessWidget {
                     style: subHeading,
                   ),
                   SizedBox(
-                    width: 200,
+                    width: 230,
                     child: Text(
                       locationName,
                       style: const TextStyle(
