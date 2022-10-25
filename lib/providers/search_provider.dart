@@ -34,9 +34,9 @@ class Varses extends ChangeNotifier {
 
   void changeTempratureType(int ind) {
     if (ind == 1) {
-      localStorage.write('tempratureType', false);
-    } else if (ind == 0) {
       localStorage.write('tempratureType', true);
+    } else if (ind == 0) {
+      localStorage.write('tempratureType', false);
     }
     notifyListeners();
   }

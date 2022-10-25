@@ -7,6 +7,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 
 import '../../controller/date_time_formatter.dart';
+import '../../providers/search_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -131,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                                                     .weekendWeather
                                                     .forecast!
                                                     .forecastday?[0]
-                                                    .hour?[index]
+                                                    .hour![index]
                                                     .time!
                                                     .split(" ")[1] ??
                                                 "Error",
@@ -141,13 +142,21 @@ class HomeScreen extends StatelessWidget {
                                             ),
                                           ),
                                           const SizedBox(height: 5),
-                                          Text(
-                                            "${wProvider.weekendWeather.forecast?.forecastday?[nextHourDay].hour?[nextHours].tempC?.round() ?? "Error"}°C",
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.white,
-                                            ),
-                                          )
+                                          localStorage.read('tempratureType') ==
+                                                  true
+                                              ? Text(
+                                                  "${wProvider.weekendWeather.forecast!.forecastday![nextHourDay].hour![nextHours].tempC!.round()}°C",
+                                                  style: const TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.white,
+                                                  ))
+                                              : Text(
+                                                  "${wProvider.weekendWeather.forecast!.forecastday![nextHourDay].hour![nextHours].tempF!.round()}°F",
+                                                  style: const TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.white,
+                                                  ),
+                                                )
                                         ],
                                       )),
                                 ),
@@ -202,11 +211,21 @@ class HomeScreen extends StatelessWidget {
                                                         horizontal: 15),
                                                 alignment:
                                                     Alignment.centerRight,
-                                                child: Text(
-                                                  "${wProvider.weekendWeather.forecast!.forecastday![index].day!.maxtempC!.round()}°C",
-                                                  style: const TextStyle(
-                                                      color: Colors.white),
-                                                ),
+                                                child: localStorage.read(
+                                                            'tempratureType') ==
+                                                        true
+                                                    ? Text(
+                                                        "${wProvider.weekendWeather.forecast!.forecastday![index].day!.maxtempC!.round()}°C",
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )
+                                                    : Text(
+                                                        "${wProvider.weekendWeather.forecast!.forecastday![index].day!.maxtempF!.round()}°F",
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
                                               )),
                                             ],
                                           ),
@@ -231,7 +250,6 @@ class HomeScreen extends StatelessWidget {
                               Container(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  // 'Today, ${DateFormat.}'
                                   "Today, ${DateTimeFormatter.formatDate(DateTime.now().toIso8601String())}",
                                   style: const TextStyle(
                                       fontSize: 14,
@@ -303,13 +321,9 @@ class HomeScreen extends StatelessWidget {
                                             const SizedBox(height: 5),
                                             Text(
                                               wProvider.weekendWeather.current!
-                                                          .windKph !=
-                                                      null
-                                                  ? wProvider.weekendWeather
-                                                      .current!.windKph!
-                                                      .round()
-                                                      .toString()
-                                                  : " fuck",
+                                                  .windKph!
+                                                  .round()
+                                                  .toString(),
                                               style: const TextStyle(
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.bold,
@@ -332,13 +346,25 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                             ),
                                             const SizedBox(height: 5),
-                                            Text(
-                                              "${wProvider.weekendWeather.current?.tempC!.round()}°C",
-                                              style: const TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
+                                            localStorage.read(
+                                                        'tempratureType') ==
+                                                    true
+                                                ? Text(
+                                                    "${wProvider.weekendWeather.current?.tempC!.round()}°C",
+                                                    style: const TextStyle(
+                                                      fontSize: 25,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    "${wProvider.weekendWeather.current?.tempF!.round()}°F",
+                                                    style: const TextStyle(
+                                                      fontSize: 25,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  )
                                           ],
                                         ),
                                         const VerticalDivider(
