@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 import 'package:weather_app/providers/search_provider.dart';
 
 class InfWidget extends StatelessWidget {
@@ -9,11 +8,12 @@ class InfWidget extends StatelessWidget {
       required this.temperature,
       required this.locationName,
       required this.localTime,
-      required this.image})
+      required this.image,
+      required this.wind})
       : super(key: key);
 
   final double temperature;
-  final double wind = 100;
+  final double wind;
   final String locationName;
   final String localTime;
   final String image;

@@ -49,6 +49,7 @@ class Varses extends ChangeNotifier {
       image:
           "assets/weather_icon_set/${weekendWeather?.current!.condition!.text.toLowerCase() ?? "Error"}"
           ".svg",
+      wind: weekendWeather?.current?.windKph ?? 0,
       //  image: 'http:${weekendWeather!.current!.condition!.icon}',
     );
     notifyListeners();

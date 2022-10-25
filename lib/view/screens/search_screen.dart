@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/controller/weather_services.dart';
-import 'package:weather_app/controller/location_services.dart';
 import 'package:weather_app/model/weekend_weather.dart';
 import 'package:weather_app/providers/search_provider.dart';
 
@@ -34,7 +31,7 @@ class SearchScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 Center(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
                     child: TextField(
                       controller: cityController,
                       decoration: const InputDecoration(
@@ -60,7 +57,7 @@ class SearchScreen extends StatelessWidget {
                   builder: (context, value, child) {
                     return Container(
                       padding: EdgeInsets.all(13),
-                      height: MediaQuery.of(context).size.height / 1.42,
+                      height: MediaQuery.of(context).size.height / 1.32,
                       child: ListView.builder(
                         itemCount: varsProvider.listOfHistory.length,
                         itemBuilder: (context, index) {
