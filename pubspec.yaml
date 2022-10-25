@@ -43,8 +43,7 @@ dependencies:
   get_storage: ^2.0.3
   iconsax: ^0.0.8
   dio_http_cache: ^0.3.0
-
-
+  carousel_slider: ^4.1.1
 
 dev_dependencies:
   flutter_test:
