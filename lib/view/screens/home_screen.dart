@@ -7,6 +7,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 
 import '../../controller/date_time_formatter.dart';
+import '../../providers/search_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -93,14 +94,19 @@ class HomeScreen extends StatelessWidget {
                           height: 120,
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: 4,
+                            itemCount: wProvider
+                                .weekendWeather
+                                .forecast!
+                                .forecastday?[0]
+                                .hour![DateTime.now().hour]
+                                .time!
+                                .length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: ((context, index) {
-                              int nextHours = 1 + index;
+                              int nextHours = DateTime.now().hour + index;
                               int nextHourDay = 0;
-                              if (nextHourDay >= 23) {
+                              if (nextHours > 23) {
                                 nextHourDay = 1;
-                                nextHours = 0;
                               } else {}
 
                               return Padding(
@@ -109,47 +115,58 @@ class HomeScreen extends StatelessWidget {
                                 child: SizedBox(
                                   width: 70,
                                   child: Card(
-                                      color: const Color.fromARGB(
-                                          255, 107, 38, 240),
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        side: BorderSide.none,
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/weather_icon_set/${wProvider.weekendWeather.forecast?.forecastday?[0].hour?[index].condition!.text.toLowerCase() ?? "Error"}"
-                                            ".svg",
-                                            width: 40,
+                                    color:
+                                        const Color.fromARGB(255, 107, 38, 240),
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                      side: BorderSide.none,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/weather_icon_set/${wProvider.weekendWeather.forecast?.forecastday?[0].hour?[index].condition!.text.toLowerCase() ?? "Error"}"
+                                          ".svg",
+                                          width: 40,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          wProvider
+                                                  .weekendWeather
+                                                  .forecast!
+                                                  .forecastday?[0]
+                                                  .hour![nextHours >= 24
+                                                      ? nextHours - 24
+                                                      : nextHours]
+                                                  .time!
+                                                  .split(" ")[1] ??
+                                              "Error",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey[300],
                                           ),
-                                          const SizedBox(height: 10),
-                                          Text(
-                                            wProvider
-                                                    .weekendWeather
-                                                    .forecast!
-                                                    .forecastday?[0]
-                                                    .hour?[index]
-                                                    .time!
-                                                    .split(" ")[1] ??
-                                                "Error",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey[300],
-                                            ),
-                                          ),
-                                          const SizedBox(height: 5),
-                                          Text(
-                                            "${wProvider.weekendWeather.forecast?.forecastday?[nextHourDay].hour?[nextHours].tempC?.round() ?? "Error"}°C",
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.white,
-                                            ),
-                                          )
-                                        ],
-                                      )),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        localStorage.read('tempratureType') ==
+                                                true
+                                            ? Text(
+                                                "${wProvider.weekendWeather.forecast!.forecastday![nextHourDay].hour![nextHours >= 24 ? nextHours - 24 : nextHours].tempC!.round()}°C",
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.white,
+                                                ))
+                                            : Text(
+                                                "${wProvider.weekendWeather.forecast!.forecastday![nextHourDay].hour![nextHours >= 24 ? nextHours - 24 : nextHours].tempF!.round()}°F",
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.white,
+                                                ),
+                                              )
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               );
                             }),
@@ -202,11 +219,21 @@ class HomeScreen extends StatelessWidget {
                                                         horizontal: 15),
                                                 alignment:
                                                     Alignment.centerRight,
-                                                child: Text(
-                                                  "${wProvider.weekendWeather.forecast!.forecastday![index].day!.maxtempC!.round()}°C",
-                                                  style: const TextStyle(
-                                                      color: Colors.white),
-                                                ),
+                                                child: localStorage.read(
+                                                            'tempratureType') ==
+                                                        true
+                                                    ? Text(
+                                                        "${wProvider.weekendWeather.forecast!.forecastday![index].day!.maxtempC!.round()}°C",
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )
+                                                    : Text(
+                                                        "${wProvider.weekendWeather.forecast!.forecastday![index].day!.maxtempF!.round()}°F",
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
                                               )),
                                             ],
                                           ),
@@ -231,7 +258,6 @@ class HomeScreen extends StatelessWidget {
                               Container(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  // 'Today, ${DateFormat.}'
                                   "Today, ${DateTimeFormatter.formatDate(DateTime.now().toIso8601String())}",
                                   style: const TextStyle(
                                       fontSize: 14,
@@ -303,13 +329,9 @@ class HomeScreen extends StatelessWidget {
                                             const SizedBox(height: 5),
                                             Text(
                                               wProvider.weekendWeather.current!
-                                                          .windKph !=
-                                                      null
-                                                  ? wProvider.weekendWeather
-                                                      .current!.windKph!
-                                                      .round()
-                                                      .toString()
-                                                  : " fuck",
+                                                  .windKph!
+                                                  .round()
+                                                  .toString(),
                                               style: const TextStyle(
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.bold,
@@ -332,13 +354,25 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                             ),
                                             const SizedBox(height: 5),
-                                            Text(
-                                              "${wProvider.weekendWeather.current?.tempC!.round()}°C",
-                                              style: const TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
+                                            localStorage.read(
+                                                        'tempratureType') ==
+                                                    true
+                                                ? Text(
+                                                    "${wProvider.weekendWeather.current?.tempC!.round()}°C",
+                                                    style: const TextStyle(
+                                                      fontSize: 25,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    "${wProvider.weekendWeather.current?.tempF!.round()}°F",
+                                                    style: const TextStyle(
+                                                      fontSize: 25,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  )
                                           ],
                                         ),
                                         const VerticalDivider(
