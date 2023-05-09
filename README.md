@@ -10,8 +10,8 @@ Flutter Weather Application for iOS and Android that uses Weather API to get the
   * Pin Cities to know their weather right away 
   * Beautiful UI
 
-<img src="screenshots/screenshot1.png" alt="WeatherApp" width="300" style="display: inline; float: left;">
-<img src="screenshots/screenshot2.png" alt="WeatherApp" width="300" style="display: inline; float: left;">
-<img src="screenshots/screenshot3.png" alt="WeatherApp" width="300" style="display: inline;float: left;">
-<img src="screenshots/screenshot4.png" alt="WeatherApp" width="300" style="display: inline;">
-<img src="screenshots/screenshot5.png" alt="WeatherApp" width="300" style="display: inline;">
+<div style="display:flex; justify-content: space-between;">
+  <img src="weatherly_screenshot1.png" alt="Weatherly Screenshot 1" width="300" />
+  <img src="weatherly_screenshot2.png" alt="Weatherly Screenshot 2" width="300" />
+  <img src="weatherly_screenshot3.png" alt="Weatherly Screenshot 3" width="300" />
+</div>
