@@ -73,10 +73,10 @@ Note: The weather app provides you with accurate weather information, allowing y
 ## 📸 Screenshots
 
 <div style="display:flex; justify-content: space-between;">
-  <img src="assets/weatherly_screenshot1.png" alt="Weatherly Screenshot 1" width="250" />
-  <img src="assets/weatherly_screenshot2.png" alt="Weatherly Screenshot 2" width="250" />
-  <img src="assets/weatherly_screenshot3.png" alt="Weatherly Screenshot 3" width="250" />
- <img src="assets/weatherly_screenshot4.png" alt="Weatherly Screenshot 3" width="250" />
+  <img src="assets/weatherly_screenshot1.png" alt="Weatherly Screenshot 1" width="200" />
+  <img src="assets/weatherly_screenshot2.png" alt="Weatherly Screenshot 2" width="200" />
+  <img src="assets/weatherly_screenshot3.png" alt="Weatherly Screenshot 3" width="200" />
+ <img src="assets/weatherly_screenshot4.png" alt="Weatherly Screenshot 3" width="200" />
 </div>
 
 
