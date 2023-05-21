@@ -102,7 +102,7 @@ If you have any questions or need further assistance regarding the project, feel
   - Harem Mhamad: [haremmhamad99@gmail.com](mailto:haremmhamad99@gmail.com)
   - Hawdang Najah: [hawdangnajah31@gmail.com](mailto:hawdangnajah31@gmail.com)
 
-- Discord: [![Discord](https://img.shields.io/badge/Discord-Chat-brightgreen?logo=discord)](https://discordapp.com/users/your-discord-id)
+- Discord: [![Discord](https://img.shields.io/badge/Discord-Chat-brightgreen?logo=discord)](https://discord.gg/kDbJWfBR)
 - WhatsApp: [![WhatsApp](https://img.shields.io/badge/WhatsApp-Chat-brightgreen?logo=whatsapp)](https://wa.me/your-phone-number)
 
 Feel free to contact us through any of the above channels. We'll be happy to assist you!
