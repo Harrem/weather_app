@@ -110,17 +110,3 @@ Feel free to contact us through any of the above channels. We'll be happy to ass
 ## 🌟 Acknowledgments
 
 We would like to express our gratitude to Hawdang Najah for their valuable contribution to the project. Their involvement and dedication have greatly enhanced the development process. Thank you, Hawdang, for your friendship and contribution.
-
-
-# Weatherly
-
-Flutter Weather Application for iOS and Android that uses Weather API to get the latest weather forecasts.
-
-## Features
-  * Getting current weather
-  * Know weather forecast for the rest of the day
-  * Getting weather forecast of the week
-  * Searching Cities
-  * Pin Cities to know their weather right away 
-  * Beautiful UI
-
