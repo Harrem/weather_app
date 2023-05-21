@@ -1,4 +1,4 @@
-# Project Name
+# Weather App
 
 [![Flutter Version](https://img.shields.io/badge/Flutter-v3.x-blue?logo=flutter)](https://flutter.dev/)
 [![Dart Version](https://img.shields.io/badge/Dart-v2.x-blue?logo=dart)](https://dart.dev/)
@@ -96,12 +96,17 @@ This project is licensed under the MIT License. You can find the details in the 
 
 ## 📞 Contact
 
-If you have any questions or need further assistance regarding the project, feel free to reach out to us through the following email addresses:
+If you have any questions or need further assistance regarding the project, feel free to reach out to us through the following channels:
 
-- Harem Mhamad: [haremmhamad99@gmail.com](mailto:haremmhamad99@gmail.com)
-- Hawdang Najah: [hawdangnajah31@gmail.com](mailto:hawdangnajah31@gmail.com)
+- Email:
+  - Harem Mhamad: [haremmhamad99@gmail.com](mailto:haremmhamad99@gmail.com)
+  - Hawdang Najah: [hawdangnajah31@gmail.com](mailto:hawdangnajah31@gmail.com)
 
-We'll be happy to help and provide the necessary support.
+- Discord: [![Discord](https://img.shields.io/badge/Discord-Chat-brightgreen?logo=discord)](https://discordapp.com/users/your-discord-id)
+- WhatsApp: [![WhatsApp](https://img.shields.io/badge/WhatsApp-Chat-brightgreen?logo=whatsapp)](https://wa.me/your-phone-number)
+
+Feel free to contact us through any of the above channels. We'll be happy to assist you!
+
 ## 🌟 Acknowledgments
 
 We would like to express our gratitude to Hawdang Najah for their valuable contribution to the project. Their involvement and dedication have greatly enhanced the development process. Thank you, Hawdang, for your friendship and contribution.
